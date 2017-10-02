@@ -117,7 +117,7 @@ namespace Web.Process
             }
 
         }
-        public static T HttpDelete<T>(string path, string mediaType)
+        public static void HttpDelete<T>(string path, string mediaType)
         {
             var pathAndQuery = path.EndsWith("/") ? path : path + "/";
             using (var client = new HttpClient())
@@ -126,7 +126,6 @@ namespace Web.Process
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
                 var response = client.DeleteAsync(pathAndQuery).Result;
                 response.EnsureSuccessStatusCode();
-                // TODO return response
             }
 
         }
