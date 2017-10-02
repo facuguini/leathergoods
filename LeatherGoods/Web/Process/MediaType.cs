@@ -1,4 +1,4 @@
-namespace UI.Process
+namespace Web.Process
 {
     public struct MediaType
     {

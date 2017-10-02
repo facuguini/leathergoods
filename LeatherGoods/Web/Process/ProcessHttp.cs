@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Web;
 using Newtonsoft.Json;
 
-namespace ASF.UI.Process
+namespace Web.Process
 {
     /// <summary>
     /// Base class for UI Controllers (not the ASP.NET MVC Controllers).
@@ -117,14 +117,14 @@ namespace ASF.UI.Process
             }
 
         }
-        public static void HttpDelete<T>(string path, int id, string mediaType)
+        public static T HttpDelete<T>(string path, string mediaType)
         {
             var pathAndQuery = path.EndsWith("/") ? path : path + "/";
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
-                var response = client.DeleteAsync(pathAndQuery + id).Result;
+                var response = client.DeleteAsync(pathAndQuery).Result;
                 response.EnsureSuccessStatusCode();
                 // TODO return response
             }
