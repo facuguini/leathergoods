@@ -14,12 +14,12 @@ namespace Web.Process
 {
     public class CategoryProcess : ProcessComponent
     {
-        const String baseUrl = "api/category/";
+        const String baseUrl = "/category/";
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<Category> SelectList()
+        public List<Category> List()
         {
             var response = HttpGet<List<Category>>(baseUrl, new Dictionary<string, object>(), MediaType.Json);
             return response;
@@ -28,7 +28,7 @@ namespace Web.Process
         /// FindByID
         /// </summary>
         /// <returns></returns>
-        public Category FindByID(int id)
+        public Category GetById(int id)
         {
             var response = HttpGet<Category>(baseUrl + id, new Dictionary<string, object>(), MediaType.Json);
             return response;
@@ -37,9 +37,9 @@ namespace Web.Process
         /// Add category
         /// </summary>
         /// <param name="category"></param>
-        public void Add (Category category)
+        public void Create (Category category)
         {
-            var response = HttpPost<Category>(baseUrl + "Add/", category, MediaType.Json);
+            var response = HttpPost<Category>(baseUrl + "create/", category, MediaType.Json);
         }
         /// <summary>
         /// Edit a category
@@ -47,7 +47,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Edit(Category category)
         {
-            var response = HttpPut<Category>(baseUrl + "Edit/", category, MediaType.Json);
+            var response = HttpPut<Category>(baseUrl + "edit/" + category.Id, category, MediaType.Json);
         }
         /// <summary>
         /// Delete a category
@@ -55,7 +55,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Delete(Category category)
         {
-            HttpDelete<Category>(baseUrl + "Remove/" + category.Id, MediaType.Json);
+            HttpDelete<Category>(baseUrl + "delete/" + category.Id, MediaType.Json);
         }
     }
 }

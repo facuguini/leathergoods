@@ -15,7 +15,7 @@ namespace Web.Process
     /// </summary>
     public abstract class ProcessComponent
     {
-        const string baseUrl = "http://localhost:5050";
+        const string baseUrl = "http://localhost:64287/api";
         /// <summary>
         /// Sends a Http Get request to a URL with querystring style parameters.
         /// </summary>
@@ -74,10 +74,9 @@ namespace Web.Process
             // Execute the Http call.
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(baseUrl);
+                var url = baseUrl + pathAndQuery;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
-
-                var response = client.GetAsync(pathAndQuery).Result;
+                var response = client.GetAsync(url).Result;
                 response.EnsureSuccessStatusCode();
 
                 result = ParseResponse<T>(response.Content.ReadAsStringAsync().Result); // TODO test it
@@ -92,9 +91,9 @@ namespace Web.Process
             var pathAndQuery = path.EndsWith("/") ? path : path + "/";
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(baseUrl);
+                var url = baseUrl + pathAndQuery;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
-                var response = client.PostAsync(pathAndQuery, ParseObject<T>(value)).Result;
+                var response = client.PostAsync(url, ParseObject<T>(value)).Result;
                 response.EnsureSuccessStatusCode();
                 return value;
 
@@ -108,7 +107,7 @@ namespace Web.Process
             var pathAndQuery = path.EndsWith("/") ? path : path + "/";
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(baseUrl);
+                var url = baseUrl + pathAndQuery;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
                 var response = client.PutAsync(pathAndQuery, ParseObject<T>(value)).Result;
                 response.EnsureSuccessStatusCode();
@@ -122,7 +121,7 @@ namespace Web.Process
             var pathAndQuery = path.EndsWith("/") ? path : path + "/";
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(baseUrl);
+                var url = baseUrl + pathAndQuery;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
                 var response = client.DeleteAsync(pathAndQuery).Result;
                 response.EnsureSuccessStatusCode();

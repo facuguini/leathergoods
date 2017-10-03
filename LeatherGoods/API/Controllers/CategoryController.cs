@@ -3,42 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Entities;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     public class CategoryController : Controller
     {
+        List<Category> list = new List<Category>();
         // GET api/Category
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Category> Get()
         {
-            return new string[] { "value1", "value2" };
+            return list;
         }
 
         // GET api/category/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Category Get(int id)
         {
-            return "value" + id;
+            return list.FirstOrDefault(x => x.Id == id);
         }
 
-        // POST api/category
+        // POST api/category/create
         [HttpPost]
-        public void Post([FromBody]string value)
+        [Route("create")]
+        public void Post([FromBody]Category category)
         {
+            list.Add(category);
         }
 
-        // PUT api/category/5
+        // PUT api/category/edit/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [Route("edit")]
+        public void Put(int id, [FromBody]Category category)
         {
+            var _category = list.FirstOrDefault(x => x.Id == id);
+            _category = category;
         }
 
-        // DELETE api/category/5
+        // DELETE api/category/delete/5
         [HttpDelete("{id}")]
+        [Route("delete")]
         public void Delete(int id)
         {
+            list.Remove(list.FirstOrDefault(x => x.Id == id));
         }
     }
 }
