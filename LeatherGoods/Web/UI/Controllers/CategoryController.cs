@@ -71,7 +71,7 @@ namespace UI.Controllers
         // GET: Category/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(process.GetById(id));
         }
 
         // POST: Category/Delete/5

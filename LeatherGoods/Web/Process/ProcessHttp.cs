@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Web;
 using Newtonsoft.Json;
 
@@ -15,7 +16,7 @@ namespace Web.Process
     /// </summary>
     public abstract class ProcessComponent
     {
-        const string baseUrl = "http://localhost:64287/api";
+        const string baseUrl = "http://localhost:5050/api";
         /// <summary>
         /// Sends a Http Get request to a URL with querystring style parameters.
         /// </summary>
@@ -26,38 +27,7 @@ namespace Web.Process
         /// <returns>An object specified in the generic type.</returns>
         protected static T HttpGet<T>(string path, Dictionary<string, object> parameters, string mediaType)
         {
-            UriBuilder builder = new UriBuilder
-            {
-                Path = path,
-                Query = string.Join("&", parameters.Where(p => p.Value != null)
-                    .Select(p => string.Format("{0}={1}",
-                        HttpUtility.UrlEncode(p.Key),
-                        HttpUtility.UrlEncode(p.Value.ToString()))))
-            };
-
-            return HttpGet<T>(builder.Uri.PathAndQuery, mediaType);
-        }
-
-        /// <summary>
-        /// Sends a Http Get request to a URL with parameters separated by /.
-        /// </summary>
-        /// <typeparam name="T">The returned type from the call.</typeparam>
-        /// <param name="path">The path to the service.</param>
-        /// <param name="values">A list of parameter values to form the query.</param>
-        /// <param name="mediaType">The media type to use i.e. application/xml or application/json.</param>
-        /// <return
-        protected static T HttpGet<T>(string path, List<object> values, string mediaType)
-        {
-            string query = string.Empty;
-            string pathAndQuery = path.EndsWith("/") ? path : path += "/";
-
-            if (values != null && values.Count > 0)
-                query = string.Join("/", values.ToArray());
-
-            if (!string.IsNullOrWhiteSpace(query))
-                pathAndQuery += query;
-
-            return HttpGet<T>(pathAndQuery, mediaType);
+            return HttpGet<T>(GetPathAndQuery(path, parameters), mediaType);
         }
 
         /// <summary>
@@ -70,24 +40,19 @@ namespace Web.Process
         private static T HttpGet<T>(string pathAndQuery, string mediaType)
         {
             T result = default(T);
-
-            // Execute the Http call.
             using (HttpClient client = new HttpClient())
             {
                 var url = baseUrl + pathAndQuery;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
                 var response = client.GetAsync(url).Result;
                 response.EnsureSuccessStatusCode();
-
                 result = ParseResponse<T>(response.Content.ReadAsStringAsync().Result); // TODO test it
             }
-
             return result;
         }
 
         public static T HttpPost<T>(string path, T value, string mediaType)
         {
-            
             var pathAndQuery = path.EndsWith("/") ? path : path + "/";
             using (var client = new HttpClient())
             {
@@ -96,37 +61,30 @@ namespace Web.Process
                 var response = client.PostAsync(url, ParseObject<T>(value)).Result;
                 response.EnsureSuccessStatusCode();
                 return value;
-
             }
-
         }
 
         public static T HttpPut<T>(string path, T value, string mediaType)
         {
-
             var pathAndQuery = path.EndsWith("/") ? path : path + "/";
             using (var client = new HttpClient())
             {
                 var url = baseUrl + pathAndQuery;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
-                var response = client.PutAsync(pathAndQuery, ParseObject<T>(value)).Result;
+                var response = client.PutAsync(url, ParseObject<T>(value)).Result;
                 response.EnsureSuccessStatusCode();
                 return value;
-
             }
-
         }
-        public static void HttpDelete<T>(string path, string mediaType)
+        public static void HttpDelete<T>(string path, Dictionary<string, object> parameters, string mediaType)
         {
-            var pathAndQuery = path.EndsWith("/") ? path : path + "/";
             using (var client = new HttpClient())
             {
-                var url = baseUrl + pathAndQuery;
+                var url = baseUrl + GetPathAndQuery(path, parameters);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
-                var response = client.DeleteAsync(pathAndQuery).Result;
+                var response = client.DeleteAsync(url).Result;
                 response.EnsureSuccessStatusCode();
             }
-
         }
 
         private static T ParseResponse<T>(string data) {
@@ -134,7 +92,19 @@ namespace Web.Process
         }
 
         private static HttpContent ParseObject<T>(T data) {
-            return new StringContent(JsonConvert.SerializeObject(data));
+            return new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+        }
+
+        private static string GetPathAndQuery(string path, Dictionary<string, object> parameters) {
+            UriBuilder builder = new UriBuilder
+            {
+                Path = path,
+                Query = string.Join("&", parameters.Where(p => p.Value != null)
+                    .Select(p => string.Format("{0}={1}",
+                        HttpUtility.UrlEncode(p.Key),
+                        HttpUtility.UrlEncode(p.Value.ToString()))))
+            };
+            return builder.Uri.PathAndQuery;
         }
     }
 }

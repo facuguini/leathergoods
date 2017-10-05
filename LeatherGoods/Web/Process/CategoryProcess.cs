@@ -47,7 +47,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Edit(Category category)
         {
-            var response = HttpPut<Category>(baseUrl + "edit/" + category.Id, category, MediaType.Json);
+            var response = HttpPut<Category>(baseUrl + "edit/", category, MediaType.Json);
         }
         /// <summary>
         /// Delete a category
@@ -55,7 +55,9 @@ namespace Web.Process
         /// <returns></returns>
         public void Delete(Category category)
         {
-            HttpDelete<Category>(baseUrl + "delete/" + category.Id, MediaType.Json);
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("id", category.Id);
+            HttpDelete<Category>(baseUrl + "delete/", parameters, MediaType.Json);
         }
     }
 }
