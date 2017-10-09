@@ -43,8 +43,8 @@ namespace API.Controllers
         }
 
         // DELETE api/category/delete/5
-        [HttpDelete("{id}")]
-        [Route("delete")]
+        [HttpDelete]
+        [Route("delete/{id}")]
         public void Delete(int id)
         {
             business.Delete(id);
