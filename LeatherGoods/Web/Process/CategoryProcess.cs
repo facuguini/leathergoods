@@ -55,7 +55,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Delete(Category category)
         {
-            HttpDelete<Category>(baseUrl + "delete/" + category.Id, new Dictionary<string, object>(), MediaType.Json);
+            HttpDelete<Category>(baseUrl + "delete/" + category.Id, MediaType.Json);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Web.Process
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
                 var response = client.GetAsync(url).Result;
                 response.EnsureSuccessStatusCode();
-                result = ParseResponse<T>(response.Content.ReadAsStringAsync().Result); // TODO test it
+                result = ParseResponse<T>(response.Content.ReadAsStringAsync().Result);
             }
             return result;
         }
@@ -86,6 +86,16 @@ namespace Web.Process
                 response.EnsureSuccessStatusCode();
             }
         }
+        public static void HttpDelete<T>(string path, string mediaType)
+        {
+            using (var client = new HttpClient())
+            {
+                var url = baseUrl + GetPathAndQuery(path);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
+                var response = client.DeleteAsync(url).Result;
+                response.EnsureSuccessStatusCode();
+            }
+        }
 
         private static T ParseResponse<T>(string data) {
             return JsonConvert.DeserializeObject<T>(data);
@@ -95,7 +105,8 @@ namespace Web.Process
             return new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
         }
 
-        private static string GetPathAndQuery(string path, Dictionary<string, object> parameters) {
+        private static string GetPathAndQuery(string path, Dictionary<string, object> parameters = null) {
+            if (parameters == null) parameters = new Dictionary<string, object>();
             UriBuilder builder = new UriBuilder
             {
                 Path = path,
