@@ -19,19 +19,19 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.Client ([FirstName], [LastName], [Email], [CountryId], [AspNetUsers], [City], [CreatedBy]) " +
                 "VALUES(@FirstName, @LastName, @Email, @CountryId, @AspNetUsers, @City, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@FirstName", DbType.String, client.FirstName);
-                db.AddInParameter(cmd, "@LastName", DbType.String, client.LastName);
-                db.AddInParameter(cmd, "@Email", DbType.String, client.Email);
-                db.AddInParameter(cmd, "@CountryId", DbType.Int32, client.CountryId);
-                db.AddInParameter(cmd, "@AspNetUsers", DbType.String, client.AspNetUsers);
-                db.AddInParameter(cmd, "@City", DbType.String, client.City);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, client.CreatedBy);
-                // Obtener el valor de la primary key.
-                client.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@FirstName", DbType.String, client.FirstName);
+            //    db.AddInParameter(cmd, "@LastName", DbType.String, client.LastName);
+            //    db.AddInParameter(cmd, "@Email", DbType.String, client.Email);
+            //    db.AddInParameter(cmd, "@CountryId", DbType.Int32, client.CountryId);
+            //    db.AddInParameter(cmd, "@AspNetUsers", DbType.String, client.AspNetUsers);
+            //    db.AddInParameter(cmd, "@City", DbType.String, client.City);
+            //    db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, client.CreatedBy);
+            //    // Obtener el valor de la primary key.
+            //    client.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
+            //}
 
             return client;
         }
@@ -54,22 +54,22 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@FirstName", DbType.String, client.FirstName);
-                db.AddInParameter(cmd, "@LastName", DbType.String, client.LastName);
-                db.AddInParameter(cmd, "@Email", DbType.String, client.Email);
-                db.AddInParameter(cmd, "@CountryId", DbType.Int32, client.CountryId);
-                db.AddInParameter(cmd, "@AspNetUsers", DbType.String, client.AspNetUsers);
-                db.AddInParameter(cmd, "@City", DbType.String, client.City);
-                db.AddInParameter(cmd, "@OrderCount", DbType.Int32, client.OrderCount);
-                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, client.ChangedOn);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, client.ChangedBy);
-                db.AddInParameter(cmd, "@Id", DbType.Int32, client.Id);
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@FirstName", DbType.String, client.FirstName);
+            //    db.AddInParameter(cmd, "@LastName", DbType.String, client.LastName);
+            //    db.AddInParameter(cmd, "@Email", DbType.String, client.Email);
+            //    db.AddInParameter(cmd, "@CountryId", DbType.Int32, client.CountryId);
+            //    db.AddInParameter(cmd, "@AspNetUsers", DbType.String, client.AspNetUsers);
+            //    db.AddInParameter(cmd, "@City", DbType.String, client.City);
+            //    db.AddInParameter(cmd, "@OrderCount", DbType.Int32, client.OrderCount);
+            //    db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, client.ChangedOn);
+            //    db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, client.ChangedBy);
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, client.Id);
 
-                db.ExecuteNonQuery(cmd);
-            }
+            //    db.ExecuteNonQuery(cmd);
+            //}
         }
 
         /// <summary>
@@ -79,12 +79,12 @@ namespace Data
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.Client WHERE [Id]=@Id ";
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-                db.ExecuteNonQuery(cmd);
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+            //    db.ExecuteNonQuery(cmd);
+            //}
         }
 
         /// <summary>
@@ -98,15 +98,15 @@ namespace Data
                 "FROM dbo.Client WHERE [Id]=@Id ";
 
             Client client = null;
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-                using (var dr = db.ExecuteReader(cmd))
-                {
-                    if (dr.Read()) client = LoadClient(dr);
-                }
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+            //    using (var dr = db.ExecuteReader(cmd))
+            //    {
+            //        if (dr.Read()) client = LoadClient(dr);
+            //    }
+            //}
 
             return client;
         }
@@ -121,18 +121,18 @@ namespace Data
             const string sqlStatement = "SELECT [Id], [FirstName], [LastName], [Email], [CountryId], [AspNetUsers], [City], [SignupDate], [Rowid], [OrderCount], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Client ";
 
             var result = new List<Client>();
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                using (var dr = db.ExecuteReader(cmd))
-                {
-                    while (dr.Read())
-                    {
-                        var client = LoadClient(dr); // Mapper
-                        result.Add(client);
-                    }
-                }
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    using (var dr = db.ExecuteReader(cmd))
+            //    {
+            //        while (dr.Read())
+            //        {
+            //            var client = LoadClient(dr); // Mapper
+            //            result.Add(client);
+            //        }
+            //    }
+            //}
 
             return result;
         }

@@ -21,17 +21,17 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.Country ([Name]) " +
                 "VALUES(@Name); SELECT SCOPE_IDENTITY();";
 
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Name", DbType.String, Country.Name);
-                //db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, Country.CreatedOn);
-                //db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, Country.CreatedBy);
-                //db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, Country.ChangedOn);
-                //db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, Country.ChangedBy);
-                // Obtener el valor de la primary key.
-                Country.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Name", DbType.String, Country.Name);
+            //    //db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, Country.CreatedOn);
+            //    //db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, Country.CreatedBy);
+            //    //db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, Country.ChangedOn);
+            //    //db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, Country.ChangedBy);
+            //    // Obtener el valor de la primary key.
+            //    Country.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
+            //}
 
             return Country;
         }
@@ -50,18 +50,18 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Name", DbType.String, Country.Name);
-                //db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, Country.CreatedOn);
-                //db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, Country.CreatedBy);
-                //db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, Country.ChangedOn);
-                //db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, Country.ChangedBy);
-                db.AddInParameter(cmd, "@Id", DbType.Int32, Country.Id);
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Name", DbType.String, Country.Name);
+            //    //db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, Country.CreatedOn);
+            //    //db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, Country.CreatedBy);
+            //    //db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, Country.ChangedOn);
+            //    //db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, Country.ChangedBy);
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, Country.Id);
 
-                db.ExecuteNonQuery(cmd);
-            }
+            //    db.ExecuteNonQuery(cmd);
+            //}
         }
 
         /// <summary>
@@ -71,12 +71,12 @@ namespace Data
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.Country WHERE [Id]=@Id ";
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-                db.ExecuteNonQuery(cmd);
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+            //    db.ExecuteNonQuery(cmd);
+            //}
         }
 
         /// <summary>
@@ -90,15 +90,15 @@ namespace Data
                 "FROM dbo.Country WHERE [Id]=@Id ";
 
             Country Country = null;
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-                using (var dr = db.ExecuteReader(cmd))
-                {
-                    if (dr.Read()) Country = LoadCountry(dr);
-                }
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+            //    using (var dr = db.ExecuteReader(cmd))
+            //    {
+            //        if (dr.Read()) Country = LoadCountry(dr);
+            //    }
+            //}
 
             return Country;
         }
@@ -113,18 +113,18 @@ namespace Data
             const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Country ";
 
             var result = new List<Country>();
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                using (var dr = db.ExecuteReader(cmd))
-                {
-                    while (dr.Read())
-                    {
-                        var Country = LoadCountry(dr); // Mapper
-                        result.Add(Country);
-                    }
-                }
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    using (var dr = db.ExecuteReader(cmd))
+            //    {
+            //        while (dr.Read())
+            //        {
+            //            var Country = LoadCountry(dr); // Mapper
+            //            result.Add(Country);
+            //        }
+            //    }
+            //}
 
             return result;
         }

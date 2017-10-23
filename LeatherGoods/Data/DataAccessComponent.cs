@@ -15,10 +15,10 @@ namespace Data
         static DataAccessComponent()
         {
             // Enterprise Library DAAB 6.0 - Database Factories.
-            DatabaseFactory.SetDatabaseProviderFactory(new DatabaseProviderFactory(), false);
+            //DatabaseFactory.SetDatabaseProviderFactory(new DatabaseProviderFactory(), false);
         }
 
-        protected int PageSize = Convert.ToInt32(ConfigurationManager.AppSettings["PageSize"]);
+        //protected int PageSize = Convert.ToInt32(ConfigurationManager.AppSettings["PageSize"]);
         //protected int PageSize
         //{
         //    get

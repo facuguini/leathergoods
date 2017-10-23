@@ -19,14 +19,14 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.Cart ([Cookie], [CreatedBy]) " +
                 "VALUES(@Cookie, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Cookie", DbType.String, cart.Cookie);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, cart.CreatedBy);
-                // Obtener el valor de la primary key.
-                cart.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Cookie", DbType.String, cart.Cookie);
+            //    db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, cart.CreatedBy);
+            //    // Obtener el valor de la primary key.
+            //    cart.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
+            //}
 
             return cart;
         }
@@ -43,15 +43,15 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Cookie", DbType.String, cart.Cookie);
-                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, cart.ChangedOn);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, cart.ChangedBy);
-                db.AddInParameter(cmd, "@Id", DbType.Int32, cart.Id);
-                db.ExecuteNonQuery(cmd);
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Cookie", DbType.String, cart.Cookie);
+            //    db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, cart.ChangedOn);
+            //    db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, cart.ChangedBy);
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, cart.Id);
+            //    db.ExecuteNonQuery(cmd);
+            //}
         }
 
         /// <summary>
@@ -61,12 +61,12 @@ namespace Data
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.Cart WHERE [Id]=@Id ";
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-                db.ExecuteNonQuery(cmd);
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+            //    db.ExecuteNonQuery(cmd);
+            //}
         }
 
         /// <summary>
@@ -80,15 +80,15 @@ namespace Data
                 "FROM dbo.Cart WHERE [Id]=@Id ";
 
             Cart cart = null;
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-                using (var dr = db.ExecuteReader(cmd))
-                {
-                    if (dr.Read()) cart = LoadCart(dr);
-                }
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+            //    using (var dr = db.ExecuteReader(cmd))
+            //    {
+            //        if (dr.Read()) cart = LoadCart(dr);
+            //    }
+            //}
 
             return cart;
         }
@@ -103,18 +103,18 @@ namespace Data
             const string sqlStatement = "SELECT [Id], [Cookie], [CartDate], [ItemCount], [Rowid], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Cart ";
 
             var result = new List<Cart>();
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                using (var dr = db.ExecuteReader(cmd))
-                {
-                    while (dr.Read())
-                    {
-                        var cart = LoadCart(dr); // Mapper
-                        result.Add(cart);
-                    }
-                }
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    using (var dr = db.ExecuteReader(cmd))
+            //    {
+            //        while (dr.Read())
+            //        {
+            //            var cart = LoadCart(dr); // Mapper
+            //            result.Add(cart);
+            //        }
+            //    }
+            //}
 
             return result;
         }

@@ -19,18 +19,18 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.Product ([Title], [Description], [DealerId], [Image], [Price], [CreatedBy]) " +
                 "VALUES(@Title, @Description, @DealerId, @Image, @Price, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Title", DbType.String, product.Title);
-                db.AddInParameter(cmd, "@Description", DbType.String, product.Description);
-                db.AddInParameter(cmd, "@DealerId", DbType.Int32, product.DealerId);
-                db.AddInParameter(cmd, "@Image", DbType.String, product.Image);
-                db.AddInParameter(cmd, "@Price", DbType.Decimal, product.Price);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, product.CreatedBy);
-                // Obtener el valor de la primary key.
-                product.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Title", DbType.String, product.Title);
+            //    db.AddInParameter(cmd, "@Description", DbType.String, product.Description);
+            //    db.AddInParameter(cmd, "@DealerId", DbType.Int32, product.DealerId);
+            //    db.AddInParameter(cmd, "@Image", DbType.String, product.Image);
+            //    db.AddInParameter(cmd, "@Price", DbType.Decimal, product.Price);
+            //    db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, product.CreatedBy);
+            //    // Obtener el valor de la primary key.
+            //    product.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
+            //}
 
             return product;
         }
@@ -52,20 +52,20 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Title", DbType.String, product.Title);
-                db.AddInParameter(cmd, "@Description", DbType.String, product.Description);
-                db.AddInParameter(cmd, "@DealerId", DbType.Int32, product.DealerId);
-                db.AddInParameter(cmd, "@Image", DbType.String, product.Image);
-                db.AddInParameter(cmd, "@Price", DbType.Decimal, product.Price);
-                db.AddInParameter(cmd, "@QuantitySold", DbType.Int32, product.QuantitySold);
-                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, product.ChangedOn);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, product.ChangedBy);
-                db.AddInParameter(cmd, "@Id", DbType.Int32, product.Id);
-                db.ExecuteNonQuery(cmd);
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Title", DbType.String, product.Title);
+            //    db.AddInParameter(cmd, "@Description", DbType.String, product.Description);
+            //    db.AddInParameter(cmd, "@DealerId", DbType.Int32, product.DealerId);
+            //    db.AddInParameter(cmd, "@Image", DbType.String, product.Image);
+            //    db.AddInParameter(cmd, "@Price", DbType.Decimal, product.Price);
+            //    db.AddInParameter(cmd, "@QuantitySold", DbType.Int32, product.QuantitySold);
+            //    db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, product.ChangedOn);
+            //    db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, product.ChangedBy);
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, product.Id);
+            //    db.ExecuteNonQuery(cmd);
+            //}
         }
 
         /// <summary>
@@ -75,12 +75,12 @@ namespace Data
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.Product WHERE [Id]=@Id ";
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-                db.ExecuteNonQuery(cmd);
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+            //    db.ExecuteNonQuery(cmd);
+            //}
         }
 
         /// <summary>
@@ -94,15 +94,15 @@ namespace Data
                 "FROM dbo.Product WHERE [Id]=@Id ";
 
             Product product = null;
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-                using (var dr = db.ExecuteReader(cmd))
-                {
-                    if (dr.Read()) product = LoadProduct(dr);
-                }
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+            //    using (var dr = db.ExecuteReader(cmd))
+            //    {
+            //        if (dr.Read()) product = LoadProduct(dr);
+            //    }
+            //}
 
             return product;
         }
@@ -117,18 +117,18 @@ namespace Data
             const string sqlStatement = "SELECT [Id], [Title], [Description], [DealerId], [Image], [Price], [QuantitySold], [AvgStars], [Rowid], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Product ";
 
             var result = new List<Product>();
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                using (var dr = db.ExecuteReader(cmd))
-                {
-                    while (dr.Read())
-                    {
-                        var product = LoadProduct(dr); // Mapper
-                        result.Add(product);
-                    }
-                }
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    using (var dr = db.ExecuteReader(cmd))
+            //    {
+            //        while (dr.Read())
+            //        {
+            //            var product = LoadProduct(dr); // Mapper
+            //            result.Add(product);
+            //        }
+            //    }
+            //}
 
             return result;
         }

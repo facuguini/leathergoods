@@ -19,17 +19,17 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.OrderDetail([OrderId], [ProductId], [Price], [Quantity], [CreatedBy]) " +
                 "VALUES(@OrderId, @ProductId, @Price, @Quantity, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@OrderId", DbType.Int32, orderD.OrderId);
-                db.AddInParameter(cmd, "@ProductId", DbType.Int32, orderD.ProductId);
-                db.AddInParameter(cmd, "@Price", DbType.Decimal, orderD.Price);
-                db.AddInParameter(cmd, "@Quantity", DbType.Int32, orderD.Quantity);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, orderD.CreatedBy);
-                // Obtener el valor de la primary key.
-                orderD.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@OrderId", DbType.Int32, orderD.OrderId);
+            //    db.AddInParameter(cmd, "@ProductId", DbType.Int32, orderD.ProductId);
+            //    db.AddInParameter(cmd, "@Price", DbType.Decimal, orderD.Price);
+            //    db.AddInParameter(cmd, "@Quantity", DbType.Int32, orderD.Quantity);
+            //    db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, orderD.CreatedBy);
+            //    // Obtener el valor de la primary key.
+            //    orderD.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
+            //}
 
             return orderD;
         }
@@ -49,18 +49,18 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@OrderId", DbType.Int32, orderD.OrderId);
-                db.AddInParameter(cmd, "@ProductId", DbType.Int32, orderD.ProductId);
-                db.AddInParameter(cmd, "@Price", DbType.Decimal, orderD.Price);
-                db.AddInParameter(cmd, "@Quantity", DbType.Int32, orderD.Quantity);
-                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, orderD.ChangedOn);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, orderD.ChangedBy);
-                db.AddInParameter(cmd, "@Id", DbType.Int32, orderD.Id);
-                db.ExecuteNonQuery(cmd);
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@OrderId", DbType.Int32, orderD.OrderId);
+            //    db.AddInParameter(cmd, "@ProductId", DbType.Int32, orderD.ProductId);
+            //    db.AddInParameter(cmd, "@Price", DbType.Decimal, orderD.Price);
+            //    db.AddInParameter(cmd, "@Quantity", DbType.Int32, orderD.Quantity);
+            //    db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, orderD.ChangedOn);
+            //    db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, orderD.ChangedBy);
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, orderD.Id);
+            //    db.ExecuteNonQuery(cmd);
+            //}
         }
 
         /// <summary>
@@ -70,12 +70,12 @@ namespace Data
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.OrderDetail WHERE [Id]=@Id ";
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-                db.ExecuteNonQuery(cmd);
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+            //    db.ExecuteNonQuery(cmd);
+            //}
         }
 
         /// <summary>
@@ -89,15 +89,15 @@ namespace Data
                 "FROM dbo.OrderDetail WHERE [Id]=@Id ";
 
             OrderDetail orderD = null;
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-                using (var dr = db.ExecuteReader(cmd))
-                {
-                    if (dr.Read()) orderD = LoadOrderDetail(dr);
-                }
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+            //    using (var dr = db.ExecuteReader(cmd))
+            //    {
+            //        if (dr.Read()) orderD = LoadOrderDetail(dr);
+            //    }
+            //}
 
             return orderD;
         }
@@ -112,18 +112,18 @@ namespace Data
             const string sqlStatement = "SELECT [Id], [OrderId], [ProductId], [Price], [Quantity], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.OrderDetail ";
 
             var result = new List<OrderDetail>();
-            var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            {
-                using (var dr = db.ExecuteReader(cmd))
-                {
-                    while (dr.Read())
-                    {
-                        var orderD = LoadOrderDetail(dr); // Mapper
-                        result.Add(orderD);
-                    }
-                }
-            }
+            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            //{
+            //    using (var dr = db.ExecuteReader(cmd))
+            //    {
+            //        while (dr.Read())
+            //        {
+            //            var orderD = LoadOrderDetail(dr); // Mapper
+            //            result.Add(orderD);
+            //        }
+            //    }
+            //}
 
             return result;
         }
