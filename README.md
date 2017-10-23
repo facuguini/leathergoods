@@ -4,9 +4,8 @@
 ## Installation
 To be able to run this proyect, you must have installed [Dotnet Core 2.0](https://www.microsoft.com/net/core).
 
-Clone this repo, go inside it an then move where the source code is allocatted and and run the next line to install required packages:
+Clone this repo and run the next line to install required packages:
 ```
-cd LeatherGoods/
 dotnet restore LeatherGoods.sln
 ```
 
