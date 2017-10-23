@@ -17,7 +17,7 @@ namespace Web.Process
     /// </summary>
     public abstract class ProcessComponent
     {
-        const string baseUrl = AppSettings.APIUrl + "/v1";
+        const string baseUrl = AppSettings.APIUrl;
         /// <summary>
         /// Sends a Http Get request to a URL with querystring style parameters.
         /// </summary>

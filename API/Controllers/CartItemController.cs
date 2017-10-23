@@ -9,7 +9,7 @@ using Business;
 
 namespace API.Controllers
 {
-    [Route("v1/[controller]")]
+    [Route("api/[controller]")]
     public class CartItemController : Controller
     {
         CartItemBusiness business = new CartItemBusiness();

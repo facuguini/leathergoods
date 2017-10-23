@@ -2,28 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Framework.Db.Concrete;
 
 namespace Framework.Db
 {
     public sealed class DatabaseFactory
     {
-        private static Database _database = null;
-
-        static DatabaseFactory()
+        public Database GetDatabase()
         {
-            try
-            {
-                _database = database;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static Database database
-        {
-            get { return _database; }
+            return new MSSQLServer();
         }
     }
 }

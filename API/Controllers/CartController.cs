@@ -11,7 +11,7 @@ using System.Net;
 
 namespace API.Controllers
 {
-    [Route("v1/[controller]")]
+    [Route("api/[controller]")]
     public class CartController : Controller
     {
         CartBusiness business = new CartBusiness();

@@ -24,7 +24,7 @@ namespace Framework
         {
             get
             {
-                return $"{Environment.GetEnvironmentVariable("API_URL")}/api" ;
+                return Environment.GetEnvironmentVariable("API_URL");
             }
         }
 
