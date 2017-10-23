@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-export ROOT=`pwd`
+export SRC_ROOT=`pwd`
 
-# export RUN="dotnet run"
-# alias lgrun="$RUN"
+export RUN="dotnet run"
+
+alias lg_run_web="$RUN --project $SRC_ROOT/Web/UI/UI.csproj"
+alias lg_run_api="$RUN --project $SRC_ROOT/API/API.csproj"
+
 
 # Set ASPNETCORE ENVIRONMENT var. Choose between [Production, Development]
 export ASPNETCORE_ENVIRONMENT='<Your Environment Here>'
@@ -12,6 +15,7 @@ export CONNECTION_STRING='<Your Environment Here>'
 
 # API URL
 export API_URL='<Your API URL Here>'
+export WEB_URL='<Your API URL Here>'
 
 
 if [ ! -f Environment/local.sh ]; then
