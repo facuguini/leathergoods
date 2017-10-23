@@ -14,15 +14,14 @@ namespace Web.Process
 {
     public class DealerProcess : ProcessComponent
     {
-
+        const string baseUrl = "/Dealer/";
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public List<Dealer> SelectList()
         {
-            var response = HttpGet<AllResponseDealer>("rest/Dealer/All", new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<List<Dealer>>(baseUrl, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
@@ -31,9 +30,7 @@ namespace Web.Process
         /// <returns></returns>
         public Dealer Find(int id)
         {
-            var path = "rest/Dealer/Find/" + id;
-            var response = HttpGet<FindResponseDealer>(path, new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<Dealer>(baseUrl + id, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
@@ -42,17 +39,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Insert(Dealer dealer)
         {
-            var response = HttpPost<Dealer>("rest/Dealer/Add", dealer, MediaType.Json);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public void Delete(int id)
-        {
-            var path = "rest/Dealer/Remove/" + id;
-            var response = HttpGet<FindResponseDealer>(path, new Dictionary<string, object>(), MediaType.Json);
+            var response = HttpPost<Dealer>(baseUrl + "create/", dealer, MediaType.Json);
         }
 
         /// <summary>
@@ -61,8 +48,16 @@ namespace Web.Process
         /// <returns></returns>
         public void Edit(Dealer dealer)
         {
-            var response = HttpPost<Dealer>("rest/Dealer/Edit", dealer, MediaType.Json);
+            var response = HttpPut<Dealer>(baseUrl + "edit/", dealer, MediaType.Json);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public void Delete(int id)
+        {
+            HttpDelete<Dealer>(baseUrl + "delete/" + id, MediaType.Json);
+        }
     }
 }

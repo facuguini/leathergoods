@@ -14,15 +14,14 @@ namespace Web.Process
 {
     public class RatingProcess : ProcessComponent
     {
-
+        const string baseUrl = "/Rating/";
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public List<Rating> SelectList()
         {
-            var response = HttpGet<AllResponseRating>("rest/Rating/All", new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<List<Rating>>(baseUrl, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
@@ -31,18 +30,25 @@ namespace Web.Process
         /// <returns></returns>
         public Rating Find(int id)
         {
-            var path = "rest/Rating/Find/" + id;
-            var response = HttpGet<FindResponseRating>(path, new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<Rating>(baseUrl + id, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public void Insert(Rating rtng)
+        public void Insert(Rating rating)
         {
-            var response = HttpPost<Rating>("rest/Rating/Add", rtng, MediaType.Json);
+            var response = HttpPost<Rating>(baseUrl + "create/", rating, MediaType.Json);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public void Edit(Rating rating)
+        {
+            var response = HttpPut<Rating>(baseUrl + "edit/", rating, MediaType.Json);
         }
 
         /// <summary>
@@ -51,18 +57,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Delete(int id)
         {
-            var path = "rest/Rating/Remove/" + id;
-            var response = HttpGet<FindResponseRating>(path, new Dictionary<string, object>(), MediaType.Json);
+            HttpDelete<Rating>(baseUrl + "delete/" + id, MediaType.Json);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public void Edit(Rating rtng)
-        {
-            var response = HttpPost<Rating>("rest/Rating/Edit", rtng, MediaType.Json);
-        }
-
     }
 }

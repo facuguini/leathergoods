@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Data;
 using Entities;
@@ -8,6 +8,7 @@ namespace Business
     public class CategoryBusiness
     {
         CategoryData db = new CategoryData();
+
         public List<Category> GetList() {
             return db.GetList();
         }

@@ -14,15 +14,14 @@ namespace Web.Process
 {
     public class CountryProcess : ProcessComponent
     {
-
+        const String baseUrl = "/Country/";
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public List<Country> SelectList()
         {
-            var response = HttpGet<AllResponseCountry>("rest/Country/All", new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<List<Country>>(baseUrl, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
@@ -31,18 +30,25 @@ namespace Web.Process
         /// <returns></returns>
         public Country Find(int id)
         {
-            var path = "rest/Country/Find/" + id;
-            var response = HttpGet<FindResponseCountry>(path, new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<Country>(baseUrl + id, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public void Insert(Country pais)
+        public void Insert(Country country)
         {
-            var response = HttpPost<Country>("rest/Country/Add", pais, MediaType.Json);
+            var response = HttpPost<Country>(baseUrl + "create/", country, MediaType.Json);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public void Edit(Country country)
+        {
+            var response = HttpPut<Country>(baseUrl + "edit/", country, MediaType.Json);
         }
 
         /// <summary>
@@ -51,17 +57,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Delete(int id)
         {
-            var path = "rest/Country/Remove/" + id;
-            var response = HttpGet<FindResponseCountry>(path, new Dictionary<string, object>(), MediaType.Json);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public void Edit(Country pais)
-        {
-            var response = HttpPost<Country>("rest/Country/Edit", pais, MediaType.Json);
+            HttpDelete<Country>(baseUrl + "delete/" + id, MediaType.Json);
         }
     }
 }

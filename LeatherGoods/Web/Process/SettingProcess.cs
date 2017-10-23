@@ -14,15 +14,14 @@ namespace Web.Process
 {
     public class SettingProcess : ProcessComponent
     {
-
+        const string baseUrl = "/Setting/";
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public List<Setting> SelectList()
         {
-            var response = HttpGet<AllResponseSetting>("rest/Setting/All", new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<List<Setting>>(baseUrl, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
@@ -31,18 +30,25 @@ namespace Web.Process
         /// <returns></returns>
         public Setting Find(int id)
         {
-            var path = "rest/Setting/Find/" + id;
-            var response = HttpGet<FindResponseSetting>(path, new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<Setting>(baseUrl + id, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public void Insert(Setting stng)
+        public void Insert(Setting setting)
         {
-            var response = HttpPost<Setting>("rest/Setting/Add", stng, MediaType.Json);
+            var response = HttpPost<Setting>(baseUrl + "create/", setting, MediaType.Json);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public void Edit(Setting setting)
+        {
+            var response = HttpPut<Setting>(baseUrl + "edit/", setting, MediaType.Json);
         }
 
         /// <summary>
@@ -51,18 +57,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Delete(int id)
         {
-            var path = "rest/Setting/Remove/" + id;
-            var response = HttpGet<FindResponseSetting>(path, new Dictionary<string, object>(), MediaType.Json);
+            HttpDelete<Setting>(baseUrl + "delete/" + id, MediaType.Json);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public void Edit(Setting stng)
-        {
-            var response = HttpPost<Setting>("rest/Setting/Edit", stng, MediaType.Json);
-        }
-
     }
 }

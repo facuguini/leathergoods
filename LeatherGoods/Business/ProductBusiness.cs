@@ -1,46 +1,24 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using ASF.Entities;
-using ASF.Data;
+using Data;
+using Entities;
 
-namespace ASF.Business
+namespace Business
 {
     /// <summary>
     /// ProductBusiness business component.
     /// </summary>
     public class ProductBusiness
     {
-
-        /// <summary>
-        /// Add method. 
-        /// </summary>
-        /// <param name="product"></param>
-        /// <returns></returns>
-        public Product Add(Product product)
-        {
-            var productDac = new ProductData();
-            return productDac.Create(product);
-        }
-
-        /// <summary>
-        /// Delete method.
-        /// </summary>
-        /// <param name="id"></param>
-        public void Remove(int id)
-        {
-            var productDac = new ProductData();
-            productDac.DeleteById(id);
-        }
+        ProductData db = new ProductData();
 
         /// <summary>
         /// FindAll method.
         /// </summary>
         /// <returns></returns>
-        public List<Product> All()
+        public List<Product> GetList()
         {
-            var productDac = new ProductData();
-            var result = productDac.Select();
+            var result = db.Select();
             return result;
         }
 
@@ -49,11 +27,20 @@ namespace ASF.Business
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Product Find(int id)
+        public Product GetById(int id)
         {
-            var productDac = new ProductData();
-            var result = productDac.SelectById(id);
+            var result = db.SelectById(id);
             return result;
+        }
+
+        /// <summary>
+        /// Add method. 
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public Product Create(Product product)
+        {
+            return db.Create(product);
         }
 
         /// <summary>
@@ -62,9 +49,16 @@ namespace ASF.Business
         /// <param name="product"></param>
         public void Edit(Product product)
         {
-            var productDac = new ProductData();
-            productDac.UpdateById(product);
+            db.UpdateById(product);
         }
 
+        /// <summary>
+        /// Delete method.
+        /// </summary>
+        /// <param name="id"></param>
+        public void Delete(int id)
+        {
+            db.DeleteById(id);
+        }
     }
 }

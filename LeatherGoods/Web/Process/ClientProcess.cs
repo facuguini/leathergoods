@@ -14,15 +14,15 @@ namespace Web.Process
 {
     public class ClientProcess : ProcessComponent
     {
-
+        const String baseUrl = "/Client/";
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public List<Client> SelectList()
         {
-            var response = HttpGet<AllResponseClient>("rest/Client/All", new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            var response = HttpGet<List<Client>>(baseUrl, new Dictionary<string, object>(), MediaType.Json);
+            return response;
         }
 
         /// <summary>
@@ -31,9 +31,8 @@ namespace Web.Process
         /// <returns></returns>
         public Client Find(int id)
         {
-            var path = "rest/Client/Find/" + id;
-            var response = HttpGet<FindResponseClient>(path, new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            var response = HttpGet<Client>(baseUrl + id, new Dictionary<string, object>(), MediaType.Json);
+            return response;
         }
 
         /// <summary>
@@ -42,17 +41,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Insert(Client client)
         {
-            var response = HttpPost<Client>("rest/Client/Add", client, MediaType.Json);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public void Delete(int id)
-        {
-            var path = "rest/Client/Remove/" + id;
-            var response = HttpGet<FindResponseClient>(path, new Dictionary<string, object>(), MediaType.Json);
+            var response = HttpPost<Client>(baseUrl + "create/", client, MediaType.Json);
         }
 
         /// <summary>
@@ -61,8 +50,16 @@ namespace Web.Process
         /// <returns></returns>
         public void Edit(Client client)
         {
-            var response = HttpPost<Client>("rest/Client/Edit", client, MediaType.Json);
+            var response = HttpPut<Client>(baseUrl + "edit/", client, MediaType.Json);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public void Delete(int id)
+        {
+            HttpDelete<Client>(baseUrl + "delete/" + id, MediaType.Json);
+        }
     }
 }

@@ -14,15 +14,14 @@ namespace Web.Process
 {
     public class OrderProcess : ProcessComponent
     {
-
+        const string baseUrl = "/Order/";
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public List<Order> SelectList()
         {
-            var response = HttpGet<AllResponseOrder>("rest/Order/All", new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<List<Order>>(baseUrl, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
@@ -31,9 +30,7 @@ namespace Web.Process
         /// <returns></returns>
         public Order Find(int id)
         {
-            var path = "rest/Order/Find/" + id;
-            var response = HttpGet<FindResponseOrder>(path, new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<Order>(baseUrl + id, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
@@ -42,17 +39,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Insert(Order order)
         {
-            var response = HttpPost<Order>("rest/Order/Add", order, MediaType.Json);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public void Delete(int id)
-        {
-            var path = "rest/Order/Remove/" + id;
-            var response = HttpGet<FindResponseOrder>(path, new Dictionary<string, object>(), MediaType.Json);
+            var response = HttpPost<Order>(baseUrl + "create/", order, MediaType.Json);
         }
 
         /// <summary>
@@ -61,8 +48,16 @@ namespace Web.Process
         /// <returns></returns>
         public void Edit(Order order)
         {
-            var response = HttpPost<Order>("rest/Order/Edit", order, MediaType.Json);
+            var response = HttpPut<Order>(baseUrl + "edit/", order, MediaType.Json);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public void Delete(int id)
+        {
+            HttpDelete<Order>(baseUrl + "delete/" + id, MediaType.Json);
+        }
     }
 }

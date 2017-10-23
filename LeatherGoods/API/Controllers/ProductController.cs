@@ -1,134 +1,50 @@
-
-
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using ASF.Business;
-using ASF.Entities;
-using ASF.Services.Contracts;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Entities;
+using Framework;
+using Business;
 
-namespace ASF.Services.Http
+namespace API.Controllers
 {
-    /// <summary>
-    /// Product HTTP service controller.
-    /// </summary>
-    [RoutePrefix("rest/Product")]
-
-    public class ProductController : ApiController
+    [Route("api/[controller]")]
+    public class ProductController : Controller
     {
-
-        [HttpPost]
-        [Route("Add")]
-        public Product Add(Product product)
-        {
-            try
-            {
-                var bp = new ProductBusiness();
-                return bp.Add(product);
-            }
-            catch (Exception ex)
-            {
-                var httpError = new HttpResponseMessage()
-                {
-                    StatusCode = (HttpStatusCode)422,
-                    ReasonPhrase = ex.Message
-                };
-
-                throw new HttpResponseException(httpError);
-            }
-        }
+        ProductBusiness business = new ProductBusiness();
 
         [HttpGet]
-        [Route("All")]
-        public AllResponseProduct All()
+        public IEnumerable<Product> GetList()
         {
-            try
-            {
-                var response = new AllResponseProduct();
-                var bp = new ProductBusiness();
-                response.Result = bp.All();
-                return response;
-            }
-            catch (Exception ex)
-            {
-                var httpError = new HttpResponseMessage()
-                {
-                    StatusCode = (HttpStatusCode)422,
-                    ReasonPhrase = ex.Message
-                };
+            return business.GetList();
+        }
 
-                throw new HttpResponseException(httpError);
-            }
+        [HttpGet("{id}")]
+        public Product GetById(int id)
+        {
+            return business.GetById(id);
         }
 
         [HttpPost]
-        [Route("Edit")]
+        [Route("create")]
+        public Product Create(Product product)
+        {
+            return business.Create(product);
+        }
+
+        [HttpPut]
+        [Route("edit")]
         public void Edit(Product product)
         {
-            try
-            {
-                var bp = new ProductBusiness();
-                product.ChangedOn = System.DateTime.Now;
-                bp.Edit(product);
-            }
-            catch (Exception ex)
-            {
-                var httpError = new HttpResponseMessage()
-                {
-                    StatusCode = (HttpStatusCode)422,
-                    ReasonPhrase = ex.Message
-                };
-
-                throw new HttpResponseException(httpError);
-            }
+            business.Edit(product);
         }
 
         [HttpGet]
-        [Route("Find/{id}")]
-        public FindResponseProduct Find(int id)
+        [Route("delete/{id}")]
+        public void Delete(int id)
         {
-            try
-            {
-                var response = new FindResponseProduct();
-                var bp = new ProductBusiness();
-                response.Result = bp.Find(id);
-                return response;
-            }
-            catch (Exception ex)
-            {
-                var httpError = new HttpResponseMessage()
-                {
-                    StatusCode = (HttpStatusCode)422,
-                    ReasonPhrase = ex.Message
-                };
-
-                throw new HttpResponseException(httpError);
-            }
+            business.Delete(id);
         }
-
-        [HttpGet]
-        [Route("Remove/{id}")]
-        public void Remove(int id)
-        {
-            try
-            {
-                var bc = new ProductBusiness();
-                bc.Remove(id);
-            }
-            catch (Exception ex)
-            {
-                var httpError = new HttpResponseMessage()
-                {
-                    StatusCode = (HttpStatusCode)422,
-                    ReasonPhrase = ex.Message
-                };
-
-                throw new HttpResponseException(httpError);
-            }
-        }
-
     }
 }

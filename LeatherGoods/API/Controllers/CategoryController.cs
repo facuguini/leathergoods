@@ -15,14 +15,14 @@ namespace API.Controllers
         CategoryBusiness business = new CategoryBusiness();
         // GET api/Category
         [HttpGet]
-        public IEnumerable<Category> Get()
+        public IEnumerable<Category> GetList()
         {
             return business.GetList();
         }
 
         // GET api/category/5
         [HttpGet("{id}")]
-        public Category Get(int id)
+        public Category GetById(int id)
         {
             return business.GetById(id);
         }
@@ -30,7 +30,7 @@ namespace API.Controllers
         // POST api/category/create
         [HttpPost]
         [Route("create")]
-        public void Post([FromBody]Category category)
+        public void Create([FromBody]Category category)
         {
             business.Create(category);
         }
@@ -38,7 +38,7 @@ namespace API.Controllers
         // PUT api/category/edit/5
         [HttpPut]
         [Route("edit")]
-        public void Put([FromBody]Category category)
+        public void Edit([FromBody]Category category)
         {
             business.Update(category);
         }

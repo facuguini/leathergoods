@@ -14,15 +14,14 @@ namespace Web.Process
 {
     public class OrderNumberProcess : ProcessComponent
     {
-
+        const string baseUrl = "/OrderNumber/";
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public List<OrderNumber> SelectList()
         {
-            var response = HttpGet<AllResponseOrderNumber>("rest/OrderNumber/All", new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<List<OrderNumber>>(baseUrl, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
@@ -31,9 +30,7 @@ namespace Web.Process
         /// <returns></returns>
         public OrderNumber Find(int id)
         {
-            var path = "rest/OrderNumber/Find/" + id;
-            var response = HttpGet<FindResponseOrderNumber>(path, new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<OrderNumber>(baseUrl + id, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
@@ -42,17 +39,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Insert(OrderNumber orderNumber)
         {
-            var response = HttpPost<OrderNumber>("rest/OrderNumber/Add", orderNumber, MediaType.Json);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public void Delete(int id)
-        {
-            var path = "rest/OrderNumber/Remove/" + id;
-            var response = HttpGet<FindResponseOrderNumber>(path, new Dictionary<string, object>(), MediaType.Json);
+            var response = HttpPost<OrderNumber>(baseUrl + "create/", orderNumber, MediaType.Json);
         }
 
         /// <summary>
@@ -61,8 +48,16 @@ namespace Web.Process
         /// <returns></returns>
         public void Edit(OrderNumber orderNumber)
         {
-            var response = HttpPost<OrderNumber>("rest/OrderNumber/Edit", orderNumber, MediaType.Json);
+            var response = HttpPut<OrderNumber>(baseUrl + "edit/", orderNumber, MediaType.Json);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public void Delete(int id)
+        {
+            HttpDelete<OrderNumber>(baseUrl + "delete/" + id, MediaType.Json);
+        }
     }
 }

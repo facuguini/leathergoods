@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Data.Common;
+using Entities;
 using System.Data;
-using Microsoft.Practices.EnterpriseLibrary.Data;
-using ASF.Entities;
 
-namespace ASF.Data
+namespace Data
 {
     /// <summary>
     /// 

@@ -14,15 +14,14 @@ namespace Web.Process
 {
     public class ProductProcess : ProcessComponent
     {
-
+        const string baseUrl = "/Product/";
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public List<Product> SelectList()
         {
-            var response = HttpGet<AllResponseProduct>("rest/Product/All", new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<List<Product>>(baseUrl, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
@@ -31,18 +30,25 @@ namespace Web.Process
         /// <returns></returns>
         public Product Find(int id)
         {
-            var path = "rest/Product/Find/" + id;
-            var response = HttpGet<FindResponseProduct>(path, new Dictionary<string, object>(), MediaType.Json);
-            return response.Result;
+            return HttpGet<Product>(baseUrl + id, new Dictionary<string, object>(), MediaType.Json);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public void Insert(Product prd)
+        public void Insert(Product product)
         {
-            var response = HttpPost<Product>("rest/Product/Add", prd, MediaType.Json);
+            var response = HttpPost<Product>(baseUrl + "create/", product, MediaType.Json);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public void Edit(Product product)
+        {
+            var response = HttpPut<Product>(baseUrl + "edit/", product, MediaType.Json);
         }
 
         /// <summary>
@@ -51,18 +57,7 @@ namespace Web.Process
         /// <returns></returns>
         public void Delete(int id)
         {
-            var path = "rest/Product/Remove/" + id;
-            var response = HttpGet<FindResponseProduct>(path, new Dictionary<string, object>(), MediaType.Json);
+            HttpDelete<Product>(baseUrl + "delete/" + id, MediaType.Json);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public void Edit(Product prd)
-        {
-            var response = HttpPost<Product>("rest/Product/Edit", prd, MediaType.Json);
-        }
-
     }
 }
