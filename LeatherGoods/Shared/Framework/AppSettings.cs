@@ -28,6 +28,14 @@ namespace Framework
             }
         }
 
+        public static string WebUrl
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("WEB_URL");
+            }
+        }
+
 
     }
 }
