@@ -16,7 +16,7 @@ namespace Web.Process
     {
         const String baseUrl = "/Cart/";
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public List<Cart> SelectList()
@@ -25,7 +25,7 @@ namespace Web.Process
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public Cart Find(int id)
@@ -34,7 +34,7 @@ namespace Web.Process
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public void Insert(Cart cart)
@@ -43,7 +43,7 @@ namespace Web.Process
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public void Edit(Cart cart)
@@ -52,12 +52,12 @@ namespace Web.Process
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
-        public void Delete(Cart cart)
+        public void Delete(int itemId)
         {
-            HttpDelete<Cart>(baseUrl + "delete/" + cart.Id, MediaType.Json);
+            HttpDelete<Cart>(baseUrl + "delete/" + itemId, MediaType.Json);
         }
     }
 }
