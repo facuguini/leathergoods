@@ -12,11 +12,35 @@ namespace Framework
             }
         }
 
-        public static string ConnectionString
+        public static string DbProvider
         {
             get
             {
-                return Environment.GetEnvironmentVariable("CONNECTION_STRING");
+                return Environment.GetEnvironmentVariable("DB_PROVIDER");
+            }
+        }
+
+        public static string DbConnectionString
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            }
+        }
+
+        public static string CacheStoreProvider
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("CACHE_STORE_PROVIDER");
+            }
+        }
+
+        public static string CacheStoreConnectionString
+        {
+            get
+            {
+                return Environment.GetEnvironmentVariable("CACHE_STORE_CONNECTION_STRING");
             }
         }
 
