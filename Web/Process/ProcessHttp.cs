@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Web;
+using Framework;
 using Newtonsoft.Json;
 
 namespace Web.Process
@@ -16,7 +17,7 @@ namespace Web.Process
     /// </summary>
     public abstract class ProcessComponent
     {
-        const string baseUrl = "http://localhost:5050/api";
+        const string baseUrl = AppSettings.APIUrl + "/v1";
         /// <summary>
         /// Sends a Http Get request to a URL with querystring style parameters.
         /// </summary>
