@@ -2,6 +2,8 @@ using System;
 using System.Data;
 using System.Configuration;
 using System.Text.RegularExpressions;
+using Framework;
+using Framework.Db;
 
 namespace Data
 {
@@ -10,22 +12,14 @@ namespace Data
     /// </summary>
     public abstract class DataAccessComponent
     {
-        protected const string ConnectionName = "default";
+        private static string ConnectionString = AppSettings.DbConnectionString;
+        private static string DbProvider = AppSettings.DbProvider;
+        internal static Database Db;
 
         static DataAccessComponent()
         {
-            // Enterprise Library DAAB 6.0 - Database Factories.
-            //DatabaseFactory.SetDatabaseProviderFactory(new DatabaseProviderFactory(), false);
+            Db = DatabaseFactory.CreateDatabase(DbProvider, ConnectionString);
         }
-
-        //protected int PageSize = Convert.ToInt32(ConfigurationManager.AppSettings["PageSize"]);
-        //protected int PageSize
-        //{
-        //    get
-        //    {
-        //        return Convert.ToInt32(ConfigurationManager.AppSettings["PageSize"]);
-        //    }
-        //}
 
         protected static T GetDataValue<T>(IDataReader dr, string columnName)
         {
