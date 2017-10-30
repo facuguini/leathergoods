@@ -20,6 +20,7 @@ namespace UI
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseContentRoot(AppContext.BaseDirectory.Substring(0, AppContext.BaseDirectory.IndexOf("bin"))) // TODO make this better
                 .UseStartup<Startup>()
                 .UseUrls(AppSettings.WebUrl)
                 .Build();
