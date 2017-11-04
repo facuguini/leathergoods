@@ -17,7 +17,7 @@ namespace Web.Process
     /// </summary>
     public abstract class ProcessComponent
     {
-        private static string baseUrl = AppSettings.APIUrl;
+        private static string baseUrl = AppSettings.APIUrl + "/api";
         /// <summary>
         /// Sends a Http Get request to a URL with querystring style parameters.
         /// </summary>
