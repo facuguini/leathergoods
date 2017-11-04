@@ -10,11 +10,11 @@ namespace Business
         CategoryData db = new CategoryData();
 
         public List<Category> GetList() {
-            return db.GetList();
+            return db.Select();
         }
 
         public Category GetById(int id) {
-            return db.GetById(id);
+            return db.SelectById(id);
         }
 
         public void Create(Category category) {
@@ -22,11 +22,11 @@ namespace Business
         }
 
         public void Update(Category category) {
-            db.Update(category);
+            db.UpdateById(category);
         }
 
         public void Delete(int id) {
-            db.Delete(id);
+            db.DeleteById(id);
         }
     }
 }
