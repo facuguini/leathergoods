@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\Services\Services.csproj"/>
-    <ProjectReference Include="..\..\Shared\Entities\Entities.csproj"/>
-    <ProjectReference Include="..\..\Shared\Framework\Framework.csproj"/>
+    <ProjectReference Include="..\..\Shared\Entities\Entities.csproj" />
+    <ProjectReference Include="..\..\Shared\Framework\Framework.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3"/>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>

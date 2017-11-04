@@ -10,22 +10,19 @@ namespace Framework.Db
     {
         public static Database CreateDatabase(string name, string connectionString)
         {
-            if(name.Length == 0)
-                throw new Exception("Database name not defined in the environment");
+            if(string.IsNullOrWhiteSpace(name))
+                throw new Exception("A concrete database name is required");
+            if (string.IsNullOrWhiteSpace(connectionString))
+                throw new Exception("A connection string is required");
             try
             {
-                MSSQLServer db = new MSSQLServer();
-                // Type database = Type.GetType(name);
-                // Console.WriteLine("1");
-                // ConstructorInfo constructor = database.GetConstructor(new Type[] { });
-                // Console.WriteLine("2");
-                // Database dbInstance = (Database)constructor.Invoke(null);
-                // Console.WriteLine("3");
-                // dbInstance.connectionString = connectionString;
-                // Console.WriteLine("4");
-                db.connectionString = connectionString;
-                Console.WriteLine(connectionString);
-                return db;
+                name = "Framework.Db.Concrete." + name; // TODO beautify it
+                Type database = Type.GetType(name);
+                if (database == null) throw new Exception("Concrete database not found");
+                ConstructorInfo constructor = database.GetConstructor(new Type[] { });
+                Database dbInstance = (Database)constructor.Invoke(null);
+                dbInstance.connectionString = connectionString;
+                return dbInstance;
             }
             catch(Exception ex)
             {
