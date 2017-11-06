@@ -47,7 +47,7 @@ namespace Data
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
-               Db.CreateParameter("@Id", id);
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id)));
                using (var dr = cmd.ExecuteReader())
                {
                    if (dr.Read()) cart = LoadCart(dr);
@@ -70,8 +70,8 @@ namespace Data
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
-               Db.CreateParameter("@Cookie", cart.Cookie);
-               Db.CreateParameter("@CreatedBy", cart.CreatedBy);
+               cmd.Parameters.Add(Db.CreateParameter("@Cookie", cart.Cookie));
+               cmd.Parameters.Add(Db.CreateParameter("@CreatedBy", cart.CreatedBy));
                cart.Id = Convert.ToInt32(cmd.ExecuteScalar());
             }
 
@@ -93,10 +93,10 @@ namespace Data
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
-               Db.CreateParameter("@Cookie", cart.Cookie);
-               Db.CreateParameter("@ChangedOn", cart.ChangedOn);
-               Db.CreateParameter("@ChangedBy", cart.ChangedBy);
-               Db.CreateParameter("@Id", cart.Id);
+               cmd.Parameters.Add(Db.CreateParameter("@Cookie", cart.Cookie));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedOn", cart.ChangedOn));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedBy", cart.ChangedBy));
+               cmd.Parameters.Add(Db.CreateParameter("@Id", cart.Id));
                cmd.ExecuteNonQuery();
             }
         }
@@ -112,7 +112,7 @@ namespace Data
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
-               Db.CreateParameter("@Id", id);
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
                cmd.ExecuteNonQuery();
             }
         }
