@@ -47,7 +47,7 @@ namespace Data
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
-               cmd.Parameters.Add(Db.CreateParameter("@Id", id)));
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
                using (var dr = cmd.ExecuteReader())
                {
                    if (dr.Read()) cart = LoadCart(dr);
