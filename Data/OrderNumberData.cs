@@ -10,7 +10,7 @@ namespace Data
     {
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="orderNumber"></param>
         /// <returns></returns>
@@ -19,20 +19,20 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.OrderNumber([Number], [CreatedBy]) " +
                 "VALUES(@Number, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Number", DbType.String, orderN.Number);
-            //    db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, orderN.CreatedBy);
-            //    // Obtener el valor de la primary key.
-            //    orderN.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Number", orderN.Number));
+               cmd.Parameters.Add(Db.CreateParameter("@CreatedBy", orderN.CreatedBy));
+               // Obtener el valor de la primary key.
+               orderN.Id = Convert.ToInt32(cmd.ExecuteScalar());
+            }
 
             return orderN;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="orderNumber"></param>
         public void UpdateById(OrderNumber orderN)
@@ -43,34 +43,34 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Number", DbType.String, orderN.Number);
-            //    db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, orderN.ChangedOn);
-            //    db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, orderN.ChangedBy);
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, orderN.Id);
-            //    db.ExecuteNonQuery(cmd);
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Number", orderN.Number));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedOn", orderN.ChangedOn));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedBy", orderN.ChangedBy));
+               cmd.Parameters.Add(Db.CreateParameter("@Id", orderN.Id));
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.OrderNumber WHERE [Id]=@Id ";
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    db.ExecuteNonQuery(cmd);
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -80,41 +80,41 @@ namespace Data
                 "FROM dbo.OrderNumber WHERE [Id]=@Id ";
 
             OrderNumber orderN = null;
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        if (dr.Read()) orderN = LoadOrderNumber(dr);
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               using (var dr = cmd.ExecuteReader())
+               {
+                   if (dr.Read()) orderN = LoadOrderNumber(dr);
+               }
+            }
 
             return orderN;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>		
+        /// <returns></returns>
         public List<OrderNumber> Select()
         {
             // WARNING! Performance
             const string sqlStatement = "SELECT [Id], [Number], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.OrderNumber ";
 
             var result = new List<OrderNumber>();
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        while (dr.Read())
-            //        {
-            //            var orderN = LoadOrderNumber(dr); // Mapper
-            //            result.Add(orderN);
-            //        }
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               using (var dr = cmd.ExecuteReader())
+               {
+                   while (dr.Read())
+                   {
+                       var orderN = LoadOrderNumber(dr); // Mapper
+                       result.Add(orderN);
+                   }
+               }
+            }
 
             return result;
         }
@@ -123,7 +123,7 @@ namespace Data
         /// Crea un nuevo OrderNumber desde un Datareader.
         /// </summary>
         /// <param name="dr">Objeto DataReader.</param>
-        /// <returns>Retorna un objeto OrderNumber.</returns>		
+        /// <returns>Retorna un objeto OrderNumber.</returns>
         private static OrderNumber LoadOrderNumber(IDataReader dr)
         {
             var orderN = new OrderNumber

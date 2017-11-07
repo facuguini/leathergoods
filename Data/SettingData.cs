@@ -10,7 +10,7 @@ namespace Data
     {
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="setting"></param>
         /// <returns></returns>
@@ -19,33 +19,33 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.Setting ([Name], [Value], [Description], [WebSiteName], [WebSiteUrl], [PageTitle], [AdminEmailAddress], [SMTP], [SMTPUsername], [SMTPPassword], [SMTPPort], [SMTPEnableSSL], [Theme], [DefaultLanguageId], [CreatedBy]) " +
                 "VALUES(@Name, @Value, @Description, @WebSiteName, @WebSiteUrl, @PageTitle, @AdminEmailAddress, @SMTP, @SMTPUsername, @SMTPPassword, @SMTPPort, @SMTPEnableSSL, @Theme, @DefaultLanguageId, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Name", DbType.String, setting.Name);
-            //    db.AddInParameter(cmd, "@Value", DbType.String, setting.Value);
-            //    db.AddInParameter(cmd, "@Description", DbType.String, setting.Description);
-            //    db.AddInParameter(cmd, "@WebSiteName", DbType.String, setting.WebSiteName);
-            //    db.AddInParameter(cmd, "@WebSiteUrl", DbType.String, setting.WebSiteUrl);
-            //    db.AddInParameter(cmd, "@PageTitle", DbType.String, setting.PageTitle);
-            //    db.AddInParameter(cmd, "@AdminEmailAddress", DbType.String, setting.AdminEmailAddress);
-            //    db.AddInParameter(cmd, "@SMTP", DbType.String, setting.SMTP);
-            //    db.AddInParameter(cmd, "@SMTPUsername", DbType.String, setting.SMTPUsername);
-            //    db.AddInParameter(cmd, "@SMTPPassword", DbType.String, setting.SMTPPassword);
-            //    db.AddInParameter(cmd, "@SMTPPort", DbType.String, setting.SMTPPort);
-            //    db.AddInParameter(cmd, "@SMTPEnableSSL", DbType.Boolean, setting.SMTPEnableSSL);
-            //    db.AddInParameter(cmd, "@Theme", DbType.String, setting.Theme);
-            //    db.AddInParameter(cmd, "@DefaultLanguageId", DbType.Int32, setting.DefaultLanguageId);
-            //    db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, setting.CreatedBy);
-            //    // Obtener el valor de la primary key.
-            //    setting.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Name", setting.Name));
+               cmd.Parameters.Add(Db.CreateParameter("@Value", setting.Value));
+               cmd.Parameters.Add(Db.CreateParameter("@Description", setting.Description));
+               cmd.Parameters.Add(Db.CreateParameter("@WebSiteName", setting.WebSiteName));
+               cmd.Parameters.Add(Db.CreateParameter("@WebSiteUrl", setting.WebSiteUrl));
+               cmd.Parameters.Add(Db.CreateParameter("@PageTitle", setting.PageTitle));
+               cmd.Parameters.Add(Db.CreateParameter("@AdminEmailAddress", setting.AdminEmailAddress));
+               cmd.Parameters.Add(Db.CreateParameter("@SMTP", setting.SMTP));
+               cmd.Parameters.Add(Db.CreateParameter("@SMTPUsername", setting.SMTPUsername));
+               cmd.Parameters.Add(Db.CreateParameter("@SMTPPassword", setting.SMTPPassword));
+               cmd.Parameters.Add(Db.CreateParameter("@SMTPPort", setting.SMTPPort));
+               cmd.Parameters.Add(Db.CreateParameter("@SMTPEnableSSL", setting.SMTPEnableSSL));
+               cmd.Parameters.Add(Db.CreateParameter("@Theme", setting.Theme));
+               cmd.Parameters.Add(Db.CreateParameter("@DefaultLanguageId", setting.DefaultLanguageId));
+               cmd.Parameters.Add(Db.CreateParameter("@CreatedBy", setting.CreatedBy));
+               // Obtener el valor de la primary key.
+               setting.Id = Convert.ToInt32(cmd.ExecuteScalar());
+            }
 
             return setting;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="product"></param>
         public void UpdateById(Setting setting)
@@ -69,48 +69,48 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Name", DbType.String, setting.Name);
-            //    db.AddInParameter(cmd, "@Value", DbType.String, setting.Value);
-            //    db.AddInParameter(cmd, "@Description", DbType.String, setting.Description);
-            //    db.AddInParameter(cmd, "@WebSiteName", DbType.String, setting.WebSiteName);
-            //    db.AddInParameter(cmd, "@WebSiteUrl", DbType.String, setting.WebSiteUrl);
-            //    db.AddInParameter(cmd, "@PageTitle", DbType.String, setting.PageTitle);
-            //    db.AddInParameter(cmd, "@AdminEmailAddress", DbType.String, setting.AdminEmailAddress);
-            //    db.AddInParameter(cmd, "@SMTP", DbType.String, setting.SMTP);
-            //    db.AddInParameter(cmd, "@SMTPUsername", DbType.String, setting.SMTPUsername);
-            //    db.AddInParameter(cmd, "@SMTPPassword", DbType.String, setting.SMTPPassword);
-            //    db.AddInParameter(cmd, "@SMTPPort", DbType.String, setting.SMTPPort);
-            //    db.AddInParameter(cmd, "@SMTPEnableSSL", DbType.Boolean, setting.SMTPEnableSSL);
-            //    db.AddInParameter(cmd, "@Theme", DbType.String, setting.Theme);
-            //    db.AddInParameter(cmd, "@DefaultLanguageId", DbType.Int32, setting.DefaultLanguageId);
-            //    db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, setting.ChangedOn);
-            //    db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, setting.ChangedBy);
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, setting.Id);
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Name", setting.Name));
+               cmd.Parameters.Add(Db.CreateParameter("@Value", setting.Value));
+               cmd.Parameters.Add(Db.CreateParameter("@Description", setting.Description));
+               cmd.Parameters.Add(Db.CreateParameter("@WebSiteName", setting.WebSiteName));
+               cmd.Parameters.Add(Db.CreateParameter("@WebSiteUrl", setting.WebSiteUrl));
+               cmd.Parameters.Add(Db.CreateParameter("@PageTitle", setting.PageTitle));
+               cmd.Parameters.Add(Db.CreateParameter("@AdminEmailAddress", setting.AdminEmailAddress));
+               cmd.Parameters.Add(Db.CreateParameter("@SMTP", setting.SMTP));
+               cmd.Parameters.Add(Db.CreateParameter("@SMTPUsername", setting.SMTPUsername));
+               cmd.Parameters.Add(Db.CreateParameter("@SMTPPassword", setting.SMTPPassword));
+               cmd.Parameters.Add(Db.CreateParameter("@SMTPPort", setting.SMTPPort));
+               cmd.Parameters.Add(Db.CreateParameter("@SMTPEnableSSL", setting.SMTPEnableSSL));
+               cmd.Parameters.Add(Db.CreateParameter("@Theme", setting.Theme));
+               cmd.Parameters.Add(Db.CreateParameter("@DefaultLanguageId", setting.DefaultLanguageId));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedOn", setting.ChangedOn));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedBy", setting.ChangedBy));
+               cmd.Parameters.Add(Db.CreateParameter("@Id", setting.Id));
 
-            //    db.ExecuteNonQuery(cmd);
-            //}
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.Setting WHERE [Id]=@Id ";
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    db.ExecuteNonQuery(cmd);
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -120,41 +120,41 @@ namespace Data
                 "FROM dbo.Setting WHERE [Id]=@Id ";
 
             Setting setting = null;
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        if (dr.Read()) setting = LoadSetting(dr);
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               using (var dr = cmd.ExecuteReader())
+               {
+                   if (dr.Read()) setting = LoadSetting(dr);
+               }
+            }
 
             return setting;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>		
+        /// <returns></returns>
         public List<Setting> Select()
         {
             // WARNING! Performance
             const string sqlStatement = "SELECT [Id], [Name], [Value], [Description], [LastChangeDate], [WebSiteName], [WebSiteUrl], [PageTitle], [AdminEmailAddress], [SMTP], [SMTPUsername], [SMTPPassword], [SMTPPort], [SMTPEnableSSL], [Theme], [DefaultLanguageId], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Setting ";
 
             var result = new List<Setting>();
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        while (dr.Read())
-            //        {
-            //            var setting = LoadSetting(dr); // Mapper
-            //            result.Add(setting);
-            //        }
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               using (var dr = cmd.ExecuteReader())
+               {
+                   while (dr.Read())
+                   {
+                       var setting = LoadSetting(dr); // Mapper
+                       result.Add(setting);
+                   }
+               }
+            }
 
             return result;
         }
@@ -163,7 +163,7 @@ namespace Data
         /// Crea un nuevo Setting desde un Datareader.
         /// </summary>
         /// <param name="dr">Objeto DataReader.</param>
-        /// <returns>Retorna un objeto Setting.</returns>		
+        /// <returns>Retorna un objeto Setting.</returns>
         private static Setting LoadSetting(IDataReader dr)
         {
             var setting = new Setting
