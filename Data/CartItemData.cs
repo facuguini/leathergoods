@@ -7,13 +7,13 @@ using System.Data;
 namespace Data
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CartItemData : DataAccessComponent
     {
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="cartitem"></param>
         /// <returns></returns>
@@ -22,23 +22,23 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.CartItem ([CartId], [ProductId], [Price] , [Quantity], [CreatedBy]) " +
                 "VALUES(@CartId, @ProductId, @Price, @Quantity, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@CartId", DbType.Int32, cartitem.CartId);
-            //    db.AddInParameter(cmd, "@ProductId", DbType.Int32, cartitem.ProductId);
-            //    db.AddInParameter(cmd, "@Price", DbType.Decimal, cartitem.Price);
-            //    db.AddInParameter(cmd, "@Quantity", DbType.Int32, cartitem.Quantity);
-            //    db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, cartitem.CreatedBy);
-            //    // Obtener el valor de la primary key.
-            //    cartitem.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@CartId", cartitem.CartId));
+               cmd.Parameters.Add(Db.CreateParameter("@ProductId", cartitem.ProductId));
+               cmd.Parameters.Add(Db.CreateParameter("@Price", cartitem.Price));
+               cmd.Parameters.Add(Db.CreateParameter("@Quantity", cartitem.Quantity));
+               cmd.Parameters.Add(Db.CreateParameter("@CreatedBy", cartitem.CreatedBy));
+               // Obtener el valor de la primary key.
+               cartitem.Id = Convert.ToInt32(cmd.ExecuteScalar());
+            }
 
             return cartitem;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="cartiitem"></param>
         public void UpdateById(CartItem cartitem)
@@ -46,42 +46,42 @@ namespace Data
             const string sqlStatement = "UPDATE dbo.CartItem " +
                 "SET [ProductId]=@ProductId, " +
                     "[Price]=@Price, " +
-                    "[Quantity]=@Quantity, " + 
+                    "[Quantity]=@Quantity, " +
                     "[ChangedOn]=@ChangedOn, " +
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@CartId", DbType.Int32, cartitem.CartId);
-            //    db.AddInParameter(cmd, "@ProductId", DbType.Int32, cartitem.ProductId);
-            //    db.AddInParameter(cmd, "@Price", DbType.Decimal, cartitem.Price);
-            //    db.AddInParameter(cmd, "@Quantity", DbType.Int32, cartitem.Quantity);
-            //    db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, cartitem.ChangedOn);
-            //    db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, cartitem.ChangedBy);
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, cartitem.Id);
-            //    db.ExecuteNonQuery(cmd);
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@CartId", cartitem.CartId));
+               cmd.Parameters.Add(Db.CreateParameter("@ProductId", cartitem.ProductId));
+               cmd.Parameters.Add(Db.CreateParameter("@Price", cartitem.Price));
+               cmd.Parameters.Add(Db.CreateParameter("@Quantity", cartitem.Quantity));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedOn", cartitem.ChangedOn));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedBy", cartitem.ChangedBy));
+               cmd.Parameters.Add(Db.CreateParameter("@Id", cartitem.Id));
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.CartItem WHERE [Id]=@Id ";
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    db.ExecuteNonQuery(cmd);
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -91,41 +91,40 @@ namespace Data
                 "FROM dbo.CartItem WHERE [Id]=@Id ";
 
             CartItem cartitem = null;
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        if (dr.Read()) cartitem = LoadCartItem(dr);
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               using (var dr = cmd.ExecuteReader())
+               {
+                   if (dr.Read()) cartitem = LoadCartItem(dr);
+               }
+            }
 
             return cartitem;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>		
+        /// <returns></returns>
         public List<CartItem> Select()
         {
-            // WARNING! Performance
             const string sqlStatement = "SELECT [Id], [CartId], [ProductId], [Price] , [Quantity], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.CartItem ";
 
             var result = new List<CartItem>();
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        while (dr.Read())
-            //        {
-            //            var cartitem = LoadCartItem(dr); // Mapper
-            //            result.Add(cartitem);
-            //        }
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               using (var dr = cmd.ExecuteReader())
+               {
+                   while (dr.Read())
+                   {
+                       var cartitem = LoadCartItem(dr); // Mapper
+                       result.Add(cartitem);
+                   }
+               }
+            }
 
             return result;
         }
@@ -134,7 +133,7 @@ namespace Data
         /// Crea un nuevo CartItem desde un Datareader.
         /// </summary>
         /// <param name="dr">Objeto DataReader.</param>
-        /// <returns>Retorna un objeto CartItem.</returns>		
+        /// <returns>Retorna un objeto CartItem.</returns>
         private static CartItem LoadCartItem(IDataReader dr)
         {
             var cartitem = new CartItem

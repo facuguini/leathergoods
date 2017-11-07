@@ -10,7 +10,7 @@ namespace Data
     {
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="orderDetail"></param>
         /// <returns></returns>
@@ -19,23 +19,23 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.OrderDetail([OrderId], [ProductId], [Price], [Quantity], [CreatedBy]) " +
                 "VALUES(@OrderId, @ProductId, @Price, @Quantity, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@OrderId", DbType.Int32, orderD.OrderId);
-            //    db.AddInParameter(cmd, "@ProductId", DbType.Int32, orderD.ProductId);
-            //    db.AddInParameter(cmd, "@Price", DbType.Decimal, orderD.Price);
-            //    db.AddInParameter(cmd, "@Quantity", DbType.Int32, orderD.Quantity);
-            //    db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, orderD.CreatedBy);
-            //    // Obtener el valor de la primary key.
-            //    orderD.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@OrderId", orderD.OrderId));
+               cmd.Parameters.Add(Db.CreateParameter("@ProductId", orderD.ProductId));
+               cmd.Parameters.Add(Db.CreateParameter("@Price", orderD.Price));
+               cmd.Parameters.Add(Db.CreateParameter("@Quantity", orderD.Quantity));
+               cmd.Parameters.Add(Db.CreateParameter("@CreatedBy", orderD.CreatedBy));
+               // Obtener el valor de la primary key.
+               orderD.Id = Convert.ToInt32(cmd.ExecuteScalar());
+            }
 
             return orderD;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="orderDetail"></param>
         public void UpdateById(OrderDetail orderD)
@@ -49,37 +49,37 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@OrderId", DbType.Int32, orderD.OrderId);
-            //    db.AddInParameter(cmd, "@ProductId", DbType.Int32, orderD.ProductId);
-            //    db.AddInParameter(cmd, "@Price", DbType.Decimal, orderD.Price);
-            //    db.AddInParameter(cmd, "@Quantity", DbType.Int32, orderD.Quantity);
-            //    db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, orderD.ChangedOn);
-            //    db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, orderD.ChangedBy);
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, orderD.Id);
-            //    db.ExecuteNonQuery(cmd);
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@OrderId", orderD.OrderId));
+               cmd.Parameters.Add(Db.CreateParameter("@ProductId", orderD.ProductId));
+               cmd.Parameters.Add(Db.CreateParameter("@Price", orderD.Price));
+               cmd.Parameters.Add(Db.CreateParameter("@Quantity", orderD.Quantity));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedOn", orderD.ChangedOn));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedBy", orderD.ChangedBy));
+               cmd.Parameters.Add(Db.CreateParameter("@Id", orderD.Id));
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.OrderDetail WHERE [Id]=@Id ";
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    db.ExecuteNonQuery(cmd);
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -89,41 +89,41 @@ namespace Data
                 "FROM dbo.OrderDetail WHERE [Id]=@Id ";
 
             OrderDetail orderD = null;
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        if (dr.Read()) orderD = LoadOrderDetail(dr);
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               using (var dr = cmd.ExecuteReader())
+               {
+                   if (dr.Read()) orderD = LoadOrderDetail(dr);
+               }
+            }
 
             return orderD;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>		
+        /// <returns></returns>
         public List<OrderDetail> Select()
         {
             // WARNING! Performance
             const string sqlStatement = "SELECT [Id], [OrderId], [ProductId], [Price], [Quantity], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.OrderDetail ";
 
             var result = new List<OrderDetail>();
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        while (dr.Read())
-            //        {
-            //            var orderD = LoadOrderDetail(dr); // Mapper
-            //            result.Add(orderD);
-            //        }
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               using (var dr = cmd.ExecuteReader())
+               {
+                   while (dr.Read())
+                   {
+                       var orderD = LoadOrderDetail(dr); // Mapper
+                       result.Add(orderD);
+                   }
+               }
+            }
 
             return result;
         }
@@ -132,7 +132,7 @@ namespace Data
         /// Crea un nuevo OrderDetail desde un Datareader.
         /// </summary>
         /// <param name="dr">Objeto DataReader.</param>
-        /// <returns>Retorna un objeto OrderDetail.</returns>		
+        /// <returns>Retorna un objeto OrderDetail.</returns>
         private static OrderDetail LoadOrderDetail(IDataReader dr)
         {
             var orderD = new OrderDetail

@@ -9,7 +9,7 @@ namespace Data
     public class RatingData : DataAccessComponent
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="rating"></param>
         /// <returns></returns>
@@ -18,22 +18,22 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.Rating ([ClientId], [ProductId], [Stars], [CreatedBy]) " +
                 "VALUES(@ClientId, @ProductId, @Stars, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@ClientId", DbType.Int32, rating.ClientId);
-            //    db.AddInParameter(cmd, "@ProductId", DbType.Int32, rating.ProductId);
-            //    db.AddInParameter(cmd, "@Stars", DbType.Int32, rating.Stars);
-            //    db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, rating.CreatedBy);
-            //    // Obtener el valor de la primary key.
-            //    rating.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@ClientId", rating.ClientId));
+               cmd.Parameters.Add(Db.CreateParameter("@ProductId", rating.ProductId));
+               cmd.Parameters.Add(Db.CreateParameter("@Stars", rating.Stars));
+               cmd.Parameters.Add(Db.CreateParameter("@CreatedBy", rating.CreatedBy));
+               // Obtener el valor de la primary key.
+               rating.Id = Convert.ToInt32(cmd.ExecuteScalar());
+            }
 
             return rating;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="rating"></param>
         public void UpdateById(Rating rating)
@@ -46,37 +46,37 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@ClientId", DbType.Int32, rating.ClientId);
-            //    db.AddInParameter(cmd, "@ProductId", DbType.Int32, rating.ProductId);
-            //    db.AddInParameter(cmd, "@Stars", DbType.Int32, rating.Stars);
-            //    db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, rating.ChangedOn);
-            //    db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, rating.ChangedBy);
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, rating.Id);
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@ClientId", rating.ClientId));
+               cmd.Parameters.Add(Db.CreateParameter("@ProductId", rating.ProductId));
+               cmd.Parameters.Add(Db.CreateParameter("@Stars", rating.Stars));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedOn", rating.ChangedOn));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedBy", rating.ChangedBy));
+               cmd.Parameters.Add(Db.CreateParameter("@Id", rating.Id));
 
-            //    db.ExecuteNonQuery(cmd);
-            //}
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.Rating WHERE [Id]=@Id ";
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    db.ExecuteNonQuery(cmd);
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -86,41 +86,41 @@ namespace Data
                 "FROM dbo.Rating WHERE [Id]=@Id ";
 
             Rating rating = null;
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        if (dr.Read()) rating = LoadRating(dr);
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               using (var dr = cmd.ExecuteReader())
+               {
+                   if (dr.Read()) rating = LoadRating(dr);
+               }
+            }
 
             return rating;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>		
+        /// <returns></returns>
         public List<Rating> Select()
         {
             // WARNING! Performance
             const string sqlStatement = "SELECT [Id], [ClientId], [ProductId], [Stars], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Rating ";
 
             var result = new List<Rating>();
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        while (dr.Read())
-            //        {
-            //            var rating = LoadRating(dr); // Mapper
-            //            result.Add(rating);
-            //        }
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               using (var dr = cmd.ExecuteReader())
+               {
+                   while (dr.Read())
+                   {
+                       var rating = LoadRating(dr); // Mapper
+                       result.Add(rating);
+                   }
+               }
+            }
 
             return result;
         }
@@ -129,7 +129,7 @@ namespace Data
         /// Crea un nuevo Rating desde un Datareader.
         /// </summary>
         /// <param name="dr">Objeto DataReader.</param>
-        /// <returns>Retorna un objeto Rating.</returns>		
+        /// <returns>Retorna un objeto Rating.</returns>
         private static Rating LoadRating(IDataReader dr)
         {
             var rating = new Rating

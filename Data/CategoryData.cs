@@ -48,7 +48,7 @@ namespace Data
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
-                Db.CreateParameter("@Id", id);
+                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
                 using (var dr = cmd.ExecuteReader())
                 {
                     if (dr.Read()) category = LoadCategory(dr);
@@ -65,18 +65,15 @@ namespace Data
         /// <returns></returns>
         public Category Create(Category category)
         {
-            const string sqlStatement ="INSERT INTO dbo.Category ([Name]) " +
-                "VALUES(@Name); SELECT SCOPE_IDENTITY();";
+            const string sqlStatement ="INSERT INTO dbo.Category ([Name], [CreatedOn], [CreatedBy]) " +
+                "VALUES(@Name, @CreatedOn, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
-                Db.CreateParameter("@Name", category.Name);
-                //db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, category.CreatedOn);
-                //db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
-                //db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, category.ChangedOn);
-                //db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
-                // Obtener el valor de la primary key.
+                cmd.Parameters.Add(Db.CreateParameter("@Name", category.Name));
+                cmd.Parameters.Add(Db.CreateParameter("@CreatedOn", DateTime.Now));
+                cmd.Parameters.Add(Db.CreateParameter("@CreatedBy", category.CreatedBy));
                 category.Id = Convert.ToInt32(cmd.ExecuteScalar());
             }
 
@@ -91,8 +88,6 @@ namespace Data
         {
             const string sqlStatement = "UPDATE dbo.Category " +
                 "SET [Name]=@Name, " +
-                    "[CreatedOn]=@CreatedOn, " +
-                    "[CreatedBy]=@CreatedBy, " +
                     "[ChangedOn]=@ChangedOn, " +
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
@@ -100,12 +95,10 @@ namespace Data
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
-                Db.CreateParameter("@Name", category.Name);
-                //db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, category.CreatedOn);
-                //db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
-                //db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, category.ChangedOn);
-                //db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
-                Db.CreateParameter("@Id", category.Id);
+                cmd.Parameters.Add(Db.CreateParameter("@Name", category.Name));
+                cmd.Parameters.Add(Db.CreateParameter("@ChangedOn", DateTime.Now));
+                cmd.Parameters.Add(Db.CreateParameter("@ChangedBy", category.ChangedBy));
+                cmd.Parameters.Add(Db.CreateParameter("@Id", category.Id));
 
                 cmd.ExecuteNonQuery();
             }
@@ -121,7 +114,7 @@ namespace Data
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
-                Db.CreateParameter("@Id", id);
+                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
                 cmd.ExecuteNonQuery();
             }
         }

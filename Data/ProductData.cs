@@ -10,7 +10,7 @@ namespace Data
     {
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
@@ -19,24 +19,24 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.Product ([Title], [Description], [DealerId], [Image], [Price], [CreatedBy]) " +
                 "VALUES(@Title, @Description, @DealerId, @Image, @Price, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Title", DbType.String, product.Title);
-            //    db.AddInParameter(cmd, "@Description", DbType.String, product.Description);
-            //    db.AddInParameter(cmd, "@DealerId", DbType.Int32, product.DealerId);
-            //    db.AddInParameter(cmd, "@Image", DbType.String, product.Image);
-            //    db.AddInParameter(cmd, "@Price", DbType.Decimal, product.Price);
-            //    db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, product.CreatedBy);
-            //    // Obtener el valor de la primary key.
-            //    product.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Title", product.Title));
+               cmd.Parameters.Add(Db.CreateParameter("@Description", product.Description));
+               cmd.Parameters.Add(Db.CreateParameter("@DealerId", product.DealerId));
+               cmd.Parameters.Add(Db.CreateParameter("@Image", product.Image));
+               cmd.Parameters.Add(Db.CreateParameter("@Price", product.Price));
+               cmd.Parameters.Add(Db.CreateParameter("@CreatedBy", product.CreatedBy));
+               // Obtener el valor de la primary key.
+               product.Id = Convert.ToInt32(cmd.ExecuteScalar());
+            }
 
             return product;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="product"></param>
         public void UpdateById(Product product)
@@ -52,39 +52,39 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Title", DbType.String, product.Title);
-            //    db.AddInParameter(cmd, "@Description", DbType.String, product.Description);
-            //    db.AddInParameter(cmd, "@DealerId", DbType.Int32, product.DealerId);
-            //    db.AddInParameter(cmd, "@Image", DbType.String, product.Image);
-            //    db.AddInParameter(cmd, "@Price", DbType.Decimal, product.Price);
-            //    db.AddInParameter(cmd, "@QuantitySold", DbType.Int32, product.QuantitySold);
-            //    db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, product.ChangedOn);
-            //    db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, product.ChangedBy);
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, product.Id);
-            //    db.ExecuteNonQuery(cmd);
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Title", product.Title));
+               cmd.Parameters.Add(Db.CreateParameter("@Description", product.Description));
+               cmd.Parameters.Add(Db.CreateParameter("@DealerId", product.DealerId));
+               cmd.Parameters.Add(Db.CreateParameter("@Image", product.Image));
+               cmd.Parameters.Add(Db.CreateParameter("@Price", product.Price));
+               cmd.Parameters.Add(Db.CreateParameter("@QuantitySold", product.QuantitySold));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedOn", product.ChangedOn));
+               cmd.Parameters.Add(Db.CreateParameter("@ChangedBy", product.ChangedBy));
+               cmd.Parameters.Add(Db.CreateParameter("@Id", product.Id));
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.Product WHERE [Id]=@Id ";
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    db.ExecuteNonQuery(cmd);
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -94,41 +94,41 @@ namespace Data
                 "FROM dbo.Product WHERE [Id]=@Id ";
 
             Product product = null;
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    db.AddInParameter(cmd, "@Id", DbType.Int32, id);
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        if (dr.Read()) product = LoadProduct(dr);
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               cmd.Parameters.Add(Db.CreateParameter("@Id", id));
+               using (var dr = cmd.ExecuteReader())
+               {
+                   if (dr.Read()) product = LoadProduct(dr);
+               }
+            }
 
             return product;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <returns></returns>		
+        /// <returns></returns>
         public List<Product> Select()
         {
             // WARNING! Performance
             const string sqlStatement = "SELECT [Id], [Title], [Description], [DealerId], [Image], [Price], [QuantitySold], [AvgStars], [Rowid], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Product ";
 
             var result = new List<Product>();
-            //var db = DatabaseFactory.CreateDatabase(ConnectionName);
-            //using (var cmd = db.GetSqlStringCommand(sqlStatement))
-            //{
-            //    using (var dr = db.ExecuteReader(cmd))
-            //    {
-            //        while (dr.Read())
-            //        {
-            //            var product = LoadProduct(dr); // Mapper
-            //            result.Add(product);
-            //        }
-            //    }
-            //}
+            var connection = Db.CreateConnection();
+            using (var cmd = Db.CreateCommand(sqlStatement, connection))
+            {
+               using (var dr = cmd.ExecuteReader())
+               {
+                   while (dr.Read())
+                   {
+                       var product = LoadProduct(dr); // Mapper
+                       result.Add(product);
+                   }
+               }
+            }
 
             return result;
         }
@@ -137,7 +137,7 @@ namespace Data
         /// Crea un nuevo Product desde un Datareader.
         /// </summary>
         /// <param name="dr">Objeto DataReader.</param>
-        /// <returns>Retorna un objeto Product.</returns>		
+        /// <returns>Retorna un objeto Product.</returns>
         private static Product LoadProduct(IDataReader dr)
         {
             var product = new Product
