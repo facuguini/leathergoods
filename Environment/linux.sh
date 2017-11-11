@@ -10,7 +10,7 @@ alias lg_run_api="$RUN --project $ROOT/API/API.csproj"
 
 # Set ASPNETCORE ENVIRONMENT var. Choose between [Production, Development]
 export ASPNETCORE_ENVIRONMENT='<Your Environment Here>'
-# Set DB_PROVIDER ENVIRONMENT var. Choose between [MSSQLServer, Oracle, Postgres]
+# Set DB_PROVIDER ENVIRONMENT var. Choose between [MSSQLServer, Oracle, Postgres, MySQL]
 export DB_PROVIDER='<Your Provider Here>'
 # Main Database connection string
 export DB_CONNECTION_STRING='<Your Environment Here>'
@@ -24,8 +24,8 @@ export API_URL='<Your API URL Here>'
 export WEB_URL='<Your API URL Here>'
 
 
-if [ ! -f Environment/local.sh ]; then
-    echo $'echo \"Local vars\"' > Environment/local.sh
-    chmod o+x Environment/local.sh
+if [ ! -f Environment/local_linux.sh ]; then
+    echo $'echo \"Local vars\"' > Environment/local_linux.sh
+    chmod o+x Environment/local_linux.sh
 fi
-. $ROOT/Environment/local.sh
+. $ROOT/Environment/local_linux.sh

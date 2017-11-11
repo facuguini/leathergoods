@@ -16,7 +16,7 @@ New-Variable -Name "CACHE_STORE_CONNECTION_STRING" -Value "<Your Environment Her
 New-Variable -Name "API_URL" -Value "<Your API URL Here>"
 New-Variable -Name "WEB_URL" -Value "<Your API URL Here>"
 
-New-Variable -Name local_path -VALUE "$($pwd)/local.ps1"
+New-Variable -Name local_path -VALUE "$($pwd)/local_windows.ps1"
 If(!(Test-Path $local_path)) {
   New-Item $local_path -type file
   "[Environment]::SetEnvironmentVariable(`"ASPNETCORE_ENVIRONMENT`", `"$($ASPNETCORE_ENVIRONMENT)`", `"Machine`")" >> $local_path

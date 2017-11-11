@@ -16,7 +16,7 @@ namespace Framework.Db
                 throw new Exception("A connection string is required");
             try
             {
-                name = "Framework.Db.Concrete." + name; // TODO beautify it
+                name = $"Framework.Db.Concrete.{name}";
                 Type database = Type.GetType(name);
                 if (database == null) throw new Exception("Concrete database not found");
                 ConstructorInfo constructor = database.GetConstructor(new Type[] { });
@@ -26,7 +26,7 @@ namespace Framework.Db
             }
             catch(Exception ex)
             {
-                throw new Exception("Error instantiating database " + name + ". " + ex.Message);
+                throw new Exception($"Error instantiating database {name} {ex.Message}");
             }
         }
     }

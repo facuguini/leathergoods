@@ -15,7 +15,7 @@ namespace Data
         public List<Category> Select()
         {
             // WARNING! Performance
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Category ";
+            const string sqlStatement = "SELECT Id, Name, CreatedOn, CreatedBy, ChangedOn, ChangedBy FROM Category";
 
             var result = new List<Category>();
             var connection = Db.CreateOpenConnection();
@@ -41,8 +41,8 @@ namespace Data
         /// <returns></returns>
         public Category SelectById(int id)
         {
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
-                "FROM dbo.Category WHERE [Id]=@Id ";
+            const string sqlStatement = "SELECT Id, Name, CreatedOn, CreatedBy, ChangedOn, ChangedBy " +
+                "FROM Category WHERE Id=@Id ";
 
             Category category = null;
             var connection = Db.CreateOpenConnection();
@@ -65,7 +65,7 @@ namespace Data
         /// <returns></returns>
         public Category Create(Category category)
         {
-            const string sqlStatement ="INSERT INTO dbo.Category ([Name], [CreatedOn], [CreatedBy]) " +
+            const string sqlStatement ="INSERT INTO Category (Name, CreatedOn, CreatedBy) " +
                 "VALUES(@Name, @CreatedOn, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
             var connection = Db.CreateOpenConnection();
@@ -86,11 +86,11 @@ namespace Data
         /// <param name="category"></param>
         public void UpdateById(Category category)
         {
-            const string sqlStatement = "UPDATE dbo.Category " +
-                "SET [Name]=@Name, " +
-                    "[ChangedOn]=@ChangedOn, " +
-                    "[ChangedBy]=@ChangedBy " +
-                "WHERE [Id]=@Id ";
+            const string sqlStatement = "UPDATE Category " +
+                "SET Name=@Name, " +
+                    "ChangedOn=@ChangedOn, " +
+                    "ChangedBy=@ChangedBy " +
+                "WHERE Id=@Id ";
 
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
@@ -110,7 +110,7 @@ namespace Data
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
-            const string sqlStatement = "DELETE dbo.Category WHERE [Id]=@Id ";
+            const string sqlStatement = "DELETE Category WHERE Id=@Id ";
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
