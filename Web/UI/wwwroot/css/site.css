@@ -33,3 +33,40 @@
         display: none;
     }
 }
+
+.martop-1 {
+  margin-top: 1em;
+}
+.martop-2 {
+  margin-top: 2em;
+}
+.martop-3 {
+  margin-top: 3em;
+}
+.martop-4 {
+  margin-top: 4em;
+}
+.martop-5 {
+  margin-top: 5em;
+}
+.martop-6 {
+  margin-top: 6em;
+}
+.marbottom-1 {
+  margin-bottom: 1em;
+}
+.marbottom-2 {
+  margin-bottom: 2em;
+}
+.marbottom-3 {
+  margin-bottom: 3em;
+}
+.marbottom-4 {
+  margin-bottom: 4em;
+}
+.marbottom-5 {
+  margin-bottom: 5em;
+}
+.marbottom-6 {
+  margin-bottom: 6em;
+}

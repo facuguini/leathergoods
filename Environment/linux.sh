@@ -19,7 +19,7 @@ export CACHE_STORE_PROVIDER='<Your Environment Here>'
 # Cache Database connection string
 export CACHE_STORE_CONNECTION_STRING='<Your Environment Here>'
 
-# API URL
+# Project urls. Do not set trailing slash
 export API_URL='<Your API URL Here>'
 export WEB_URL='<Your API URL Here>'
 
