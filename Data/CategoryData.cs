@@ -66,7 +66,7 @@ namespace Data
         public Category Create(Category category)
         {
             const string sqlStatement ="INSERT INTO Category (Name, CreatedOn, CreatedBy) " +
-                "VALUES(@Name, @CreatedOn, @CreatedBy); SELECT SCOPE_IDENTITY();";
+                "VALUES(@Name, @CreatedOn, @CreatedBy); SELECT LAST_INSERT_ID();";
 
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
@@ -110,7 +110,7 @@ namespace Data
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
-            const string sqlStatement = "DELETE Category WHERE Id=@Id ";
+            const string sqlStatement = "DELETE FROM Category WHERE Id=@Id ";
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
