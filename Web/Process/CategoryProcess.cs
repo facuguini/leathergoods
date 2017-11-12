@@ -14,9 +14,9 @@ namespace Web.Process
 {
     public class CategoryProcess : ProcessComponent
     {
-        const String baseUrl = "/category/";
+        const string baseUrl = "/category/";
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public List<Category> List()
