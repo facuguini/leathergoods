@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UI.Models;
+using UI.Session;
 
 namespace UI.Controllers
 {
+    [SessionCookie]
     public class HomeController : Controller
     {
         public IActionResult Index()
