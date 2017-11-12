@@ -25,7 +25,8 @@ bld/
 [Ll]og/
 
 # Local env vars
-local.sh
+local_linux.sh
+local_windows.ps1
 
 # Visual Studio 2015 cache/options directory
 .vs/
