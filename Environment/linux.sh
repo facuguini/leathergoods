@@ -4,6 +4,7 @@ export ROOT=`pwd`
 
 export RUN="dotnet run"
 
+# Only for DEV
 alias lg_run_web="$RUN --project $ROOT/Web/UI/UI.csproj"
 alias lg_run_api="$RUN --project $ROOT/API/API.csproj"
 

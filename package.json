@@ -1,0 +1,13 @@
+{
+  "name": "leathergoods",
+  "version": "1.0.0",
+  "description": "LeatherGoods App",
+  "main": "index.js",
+  "repository": "git@github:fguini/leathergoods.git",
+  "author": "Marco Puccio <mpuccio90@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "web": ". Environment/linux.sh && $RUN --project $ROOT/Web/UI/UI.csproj",
+    "api": ". Environment/linux.sh && $RUN --project $ROOT/API/API.csproj"
+  }
+}
