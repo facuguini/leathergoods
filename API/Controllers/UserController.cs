@@ -36,7 +36,7 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("login")]
-        public User LogIn(User User)
+        public User LogIn([FromBody]User User)
         {
             return business.LogIn(User);
         }

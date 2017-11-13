@@ -43,7 +43,7 @@ namespace Business
             if(list.Count == 0)
                 throw new Exception("Wrong username");
             var _user = list[0];
-            if(Crypto.Encrypt(user.PasswordHash) != _user.PasswordHash)
+            if(user.PasswordHash != Crypto.Decrypt(_user.PasswordHash))
                 throw new Exception("Incorrect password");
             return _user;
         }

@@ -8,7 +8,7 @@ namespace Framework.Crypto
 {
     public static class Crypto
     {
-        private readonly byte[] key = Convert.FromBase64String("AAECAwQFBgcICQoLDA0ODw==");
+        private static readonly byte[] key = Convert.FromBase64String("AAECAwQFBgcICQoLDA0ODw==");
 
         /// <summary>
         ///     Encrypt a value

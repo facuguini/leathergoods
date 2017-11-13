@@ -37,9 +37,9 @@ namespace Web.Process
         ///
         /// </summary>
         /// <returns></returns>
-        public User LogIn(User user)
+        public User LogIn(User User)
         {
-            return HttpPost<User>(baseUrl + "login", user, MediaType.Json);
+            return HttpPost<User>(baseUrl + "login", User, MediaType.Json);
         }
 
         /// <summary>

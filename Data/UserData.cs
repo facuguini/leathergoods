@@ -21,7 +21,7 @@ namespace Data
                 "UserName) VALUES(@Email, @EmailConfirmed, @PasswordHash, @SecurityStamp, @PhoneNumber, @PhoneNumberConfirmed, " +
                 "@TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount, @UserName); SELECT LAST_INSERT_ID();";
 
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Email", User.Email));
@@ -68,7 +68,7 @@ namespace Data
             //         "[ChangedBy]=@ChangedBy " +
             //     "WHERE [Id]=@Id ";
 
-            // var connection = Db.CreateConnection();
+            // var connection = Db.CreateOpenConnection();
             // using (var cmd = Db.CreateCommand(sqlStatement, connection))
             // {
             //    cmd.Parameters.Add(Db.CreateParameter("@Name", User.Name));
@@ -100,7 +100,7 @@ namespace Data
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE FROM User WHERE Id = @Id ";
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
@@ -118,7 +118,7 @@ namespace Data
             const string sqlStatement = "SELECT * FROM User WHERE Id = @Id;";
 
             User User = null;
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
@@ -141,7 +141,7 @@ namespace Data
             const string sqlStatement = "SELECT * FROM User";
 
             var result = new List<User>();
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                using (var dr = cmd.ExecuteReader())
@@ -164,10 +164,10 @@ namespace Data
         public List<User> SelectByUserName(string UserName)
         {
             // WARNING! Performance
-            const string sqlStatement = "SELECT * FROM User WHERE UserName = @UserName";
+            const string sqlStatement = "SELECT * FROM AspNetUsers WHERE UserName = @UserName";
 
             var result = new List<User>();
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@UserName", UserName));
