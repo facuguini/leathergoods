@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Process;
 using Entities;
+using UI.Session;
 
 namespace UI.Controllers
 {
+    [SessionCookie]
     public class CartController : Controller
     {
         // GET: Carts/Cart

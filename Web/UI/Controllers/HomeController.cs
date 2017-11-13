@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities;
+using Framework.Cache;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UI.Models;
 using UI.Session;
+using Web.Process;
 
 namespace UI.Controllers
 {
@@ -29,6 +33,35 @@ namespace UI.Controllers
             ViewData["Message"] = "Your contact page.";
 
             return View();
+        }
+
+        public IActionResult LogIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LogIn(FormCollection form)
+        {
+            var user = new User() {
+                UserName = form["UserName"],
+                PasswordHash = form["Password"]
+            };
+            var _user = new UserProcess().LogIn(user);
+            if(_user == null)
+                return View(user);
+            Cache.Add(
+                Request.Cookies.FirstOrDefault(x => x.Key == ".leathergoods").Value,
+                _user
+            );
+            return RedirectToAction("Index", "Category");
+        }
+
+        [HttpGet]
+        public IActionResult LogOut()
+        {
+            Cache.Remove(Request.Cookies.FirstOrDefault(x => x.Key == ".leathergoods").Value);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Error()

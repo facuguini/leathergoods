@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Process;
 using Entities;
+using UI.Session;
+using Lppa.UI.Web.Security;
 
 namespace UI.Controllers
 {
+    [SessionCookie]
+    [Authorize]
     public class CategoryController : Controller
     {
         CategoryProcess process = new CategoryProcess();
