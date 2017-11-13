@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -41,12 +41,8 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult LogIn(FormCollection form)
+        public IActionResult LogIn(User user)
         {
-            var user = new User() {
-                UserName = form["UserName"],
-                PasswordHash = form["Password"]
-            };
             var _user = new UserProcess().LogIn(user);
             if(_user == null)
                 return View(user);
