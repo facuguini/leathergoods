@@ -8,12 +8,14 @@ using Framework.Cache;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UI.Models;
+using UI.Security;
 using UI.Session;
 using Web.Process;
 
 namespace UI.Controllers
 {
     [SessionCookie]
+    [IsLogged]
     public class HomeController : Controller
     {
         public IActionResult Index()

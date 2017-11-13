@@ -21,11 +21,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Category" asp-action="Index">Category</a></li>
                     @if(Context.Items["User"] != null)
                     {
+                      <li><a asp-area="" asp-controller="Category" asp-action="Index">Category</a></li>
                       <li><a>Hola, @Context.Items["User"]</a></li>
                       <li><a asp-area="" asp-controller="Home" asp-action="LogOut">Log out</a></li>
+                    } else {
+                      <li><a asp-area="" asp-controller="Home" asp-action="LogIn">Login</a></li>
                     }
                 </ul>
             </div>

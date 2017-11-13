@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Web.Process;
 using Entities;
 using UI.Session;
-using Lppa.UI.Web.Security;
+using UI.Security;
 
 namespace UI.Controllers
 {
