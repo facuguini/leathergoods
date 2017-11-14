@@ -1,4 +1,7 @@
+DROP DATABASE IF EXISTS `leathergoods`;
 CREATE DATABASE `leathergoods` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `leathergoods`;
 
 CREATE TABLE `AspNetUsers` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -30,3 +33,4 @@ CREATE TABLE `Category` (
 INSERT INTO `leathergoods`.`AspNetUsers` (`Email`, `EmailConfirmed`, `PasswordHash`, `SecurityStamp`, `PhoneNumber`,
 `PhoneNumberConfirmed`, `TwoFactorEnabled`, `UserName`) VALUES ('admin@admin.com', 1,
 'fYsznLkr49rxD1Vkm12FbaDRqpSAzkuE7Pbtg8qYrFk=', 'ASDASDnu2dn9210dn0d21idn2mdi', '1111-1111', 1, 0, 'admin');
+~
