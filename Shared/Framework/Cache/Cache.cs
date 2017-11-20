@@ -22,7 +22,13 @@ namespace Framework.Cache
         public static void Add(string key, object value)
         {
             // TODO save in db if configured
-            cache.Add(key, value);
+            try {
+                cache.Add(key, value);
+            } catch(ArgumentNullException ex) {
+                throw ex;
+            } catch(ArgumentException ex) {
+                cache[key] = value;
+            }
         }
 
         /// <summary>

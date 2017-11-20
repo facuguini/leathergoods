@@ -45,7 +45,18 @@ namespace Business
             var _user = list[0];
             if(user.PasswordHash != Crypto.Decrypt(_user.PasswordHash))
                 throw new Exception("Incorrect password");
+            _user.Roles = GetUserRole(_user.Id);
             return _user;
+        }
+
+        /// <summary>
+        /// Find user roles.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private List<Role> GetUserRole(int id)
+        {
+            return new RoleBusiness().GetByUserId(id);
         }
 
         /// <summary>

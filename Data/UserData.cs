@@ -99,7 +99,7 @@ namespace Data
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
-            const string sqlStatement = "DELETE FROM User WHERE Id = @Id ";
+            const string sqlStatement = "DELETE FROM AspNetUsers WHERE Id = @Id ";
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
@@ -115,7 +115,7 @@ namespace Data
         /// <returns></returns>
         public User SelectById(int id)
         {
-            const string sqlStatement = "SELECT * FROM User WHERE Id = @Id;";
+            const string sqlStatement = "SELECT * FROM AspNetUsers WHERE Id = @Id;";
 
             User User = null;
             var connection = Db.CreateOpenConnection();
@@ -138,7 +138,7 @@ namespace Data
         public List<User> Select()
         {
             // WARNING! Performance
-            const string sqlStatement = "SELECT * FROM User";
+            const string sqlStatement = "SELECT * FROM AspNetUsers";
 
             var result = new List<User>();
             var connection = Db.CreateOpenConnection();
