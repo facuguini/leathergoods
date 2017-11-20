@@ -99,5 +99,12 @@ namespace Entities
         [DataMember]
         [DisplayName("UserName")]
         public string UserName { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [DataMember]
+        [DisplayName("Roles")]
+        public List<Role> Roles { get; set; }
     }
 }

@@ -20,6 +20,30 @@ CREATE TABLE `AspNetUsers` (
   UNIQUE KEY `Id_UNIQUE` (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+CREATE TABLE `AspNetRoles` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC)
+);
+
+CREATE TABLE `AspNetUserRoles` (
+  `UserId` INT NOT NULL,
+  `RoleId` INT NOT NULL,
+  PRIMARY KEY (`UserId`, `RoleId`),
+  INDEX `UserRole_Role_idx` (`RoleId` ASC),
+  CONSTRAINT `UserRole_User`
+    FOREIGN KEY (`UserId`)
+    REFERENCES `AspNetUsers` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `UserRole_Role`
+    FOREIGN KEY (`RoleId`)
+    REFERENCES `AspNetRoles` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
 CREATE TABLE `Category` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(100) CHARACTER SET utf8 NOT NULL,
@@ -30,7 +54,8 @@ CREATE TABLE `Category` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
+
+
 INSERT INTO `leathergoods`.`AspNetUsers` (`Email`, `EmailConfirmed`, `PasswordHash`, `SecurityStamp`, `PhoneNumber`,
 `PhoneNumberConfirmed`, `TwoFactorEnabled`, `UserName`) VALUES ('admin@admin.com', 1,
 'fYsznLkr49rxD1Vkm12FbaDRqpSAzkuE7Pbtg8qYrFk=', 'ASDASDnu2dn9210dn0d21idn2mdi', '1111-1111', 1, 0, 'admin');
-~
