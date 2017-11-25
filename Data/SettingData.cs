@@ -19,7 +19,7 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.Setting ([Name], [Value], [Description], [WebSiteName], [WebSiteUrl], [PageTitle], [AdminEmailAddress], [SMTP], [SMTPUsername], [SMTPPassword], [SMTPPort], [SMTPEnableSSL], [Theme], [DefaultLanguageId], [CreatedBy]) " +
                 "VALUES(@Name, @Value, @Description, @WebSiteName, @WebSiteUrl, @PageTitle, @AdminEmailAddress, @SMTP, @SMTPUsername, @SMTPPassword, @SMTPPort, @SMTPEnableSSL, @Theme, @DefaultLanguageId, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Name", setting.Name));
@@ -69,7 +69,7 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Name", setting.Name));
@@ -101,7 +101,7 @@ namespace Data
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.Setting WHERE [Id]=@Id ";
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
@@ -120,7 +120,7 @@ namespace Data
                 "FROM dbo.Setting WHERE [Id]=@Id ";
 
             Setting setting = null;
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
@@ -143,7 +143,7 @@ namespace Data
             const string sqlStatement = "SELECT [Id], [Name], [Value], [Description], [LastChangeDate], [WebSiteName], [WebSiteUrl], [PageTitle], [AdminEmailAddress], [SMTP], [SMTPUsername], [SMTPPassword], [SMTPPort], [SMTPEnableSSL], [Theme], [DefaultLanguageId], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Setting ";
 
             var result = new List<Setting>();
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                using (var dr = cmd.ExecuteReader())

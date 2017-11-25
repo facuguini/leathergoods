@@ -16,10 +16,10 @@ namespace Data
         /// <returns></returns>
         public Product Create(Product product)
         {
-            const string sqlStatement = "INSERT INTO dbo.Product ([Title], [Description], [DealerId], [Image], [Price], [CreatedBy]) " +
-                "VALUES(@Title, @Description, @DealerId, @Image, @Price, @CreatedBy); SELECT SCOPE_IDENTITY();";
+            string sqlStatement = "INSERT INTO Product (Title, Description, DealerId, Image, Price, CreatedBy) " +
+                "VALUES(@Title, @Description, @DealerId, @Image, @Price, @CreatedBy);" + Db.LastIdFunction();
 
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Title", product.Title));
@@ -41,18 +41,18 @@ namespace Data
         /// <param name="product"></param>
         public void UpdateById(Product product)
         {
-            const string sqlStatement = "UPDATE dbo.Product " +
-                "SET [Title]=@Title, " +
-                    "[Description]=@Description, " +
-                    "[DealerId]=@DealerId, " +
-                    "[Image]=@Image, " +
-                    "[Price]=@Price, " +
-                    "[QuantitySold]=@QuantitySold, " +
-                    "[ChangedOn]=@ChangedOn, " +
-                    "[ChangedBy]=@ChangedBy " +
-                "WHERE [Id]=@Id ";
+            const string sqlStatement = "UPDATE Product " +
+                "SET Title=@Title, " +
+                    "Description=@Description, " +
+                    "DealerId=@DealerId, " +
+                    "Image=@Image, " +
+                    "Price=@Price, " +
+                    "QuantitySold=@QuantitySold, " +
+                    "ChangedOn=@ChangedOn, " +
+                    "ChangedBy=@ChangedBy " +
+                "WHERE Id=@Id ";
 
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Title", product.Title));
@@ -74,8 +74,8 @@ namespace Data
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
-            const string sqlStatement = "DELETE dbo.Product WHERE [Id]=@Id ";
-            var connection = Db.CreateConnection();
+            const string sqlStatement = "DELETE Product WHERE Id=@Id ";
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
@@ -90,11 +90,11 @@ namespace Data
         /// <returns></returns>
         public Product SelectById(int id)
         {
-            const string sqlStatement = "SELECT [Id], [Title], [Description], [DealerId], [Image], [Price], [QuantitySold], [AvgStars], [Rowid], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
-                "FROM dbo.Product WHERE [Id]=@Id ";
+            const string sqlStatement = "SELECT Id, Title, Description, DealerId, Image, Price, QuantitySold, " +
+                "AvgStars, Rowid, CreatedOn, CreatedBy, ChangedOn, ChangedBy FROM Product WHERE Id = @Id;";
 
             Product product = null;
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
@@ -114,10 +114,10 @@ namespace Data
         public List<Product> Select()
         {
             // WARNING! Performance
-            const string sqlStatement = "SELECT [Id], [Title], [Description], [DealerId], [Image], [Price], [QuantitySold], [AvgStars], [Rowid], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Product ";
+            const string sqlStatement = "SELECT Id, Title, Description, DealerId, Image, Price, QuantitySold, AvgStars, Rowid, CreatedOn, CreatedBy, ChangedOn, ChangedBy FROM Product ";
 
             var result = new List<Product>();
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                using (var dr = cmd.ExecuteReader())

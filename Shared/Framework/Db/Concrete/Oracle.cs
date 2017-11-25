@@ -42,5 +42,10 @@ namespace Framework.Db.Concrete
         {
             return new OracleParameter(parameterName, parameterValue);
         }
+
+        public override string LastIdFunction()
+        {
+            return "SELECT @@IDENTITY;"; // TODO check it
+        }
     }
 }

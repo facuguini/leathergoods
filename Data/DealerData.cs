@@ -19,7 +19,7 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.Dealer ([FirstName], [LastName], [CategoryId], [CountryId], [Description], [CreatedBy]) " +
                 "VALUES(@FirstName, @LastName, @CategoryId, @CountryId, @Description, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@FirstName", dealer.FirstName));
@@ -51,7 +51,7 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@FirstName", dealer.FirstName));
@@ -74,7 +74,7 @@ namespace Data
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.Dealer WHERE [Id]=@Id ";
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
@@ -93,7 +93,7 @@ namespace Data
                 "FROM dbo.Dealer WHERE [Id]=@Id ";
 
             Dealer dealer = null;
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
@@ -116,7 +116,7 @@ namespace Data
             const string sqlStatement = "SELECT [Id], [FirstName], [LastName], [CategoryId], [CountryId], [Description], [TotalProducts], [Rowid], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Dealer ";
 
             var result = new List<Dealer>();
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                using (var dr = cmd.ExecuteReader())

@@ -65,8 +65,8 @@ namespace Data
         /// <returns></returns>
         public Category Create(Category category)
         {
-            const string sqlStatement ="INSERT INTO Category (Name, CreatedOn, CreatedBy) " +
-                "VALUES(@Name, @CreatedOn, @CreatedBy); SELECT LAST_INSERT_ID();";
+            string sqlStatement ="INSERT INTO Category (Name, CreatedOn, CreatedBy) " +
+                "VALUES(@Name, @CreatedOn, @CreatedBy); " + Db.LastIdFunction();
 
             var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))

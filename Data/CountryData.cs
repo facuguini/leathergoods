@@ -21,7 +21,7 @@ namespace Data
             const string sqlStatement = "INSERT INTO dbo.Country ([Name], [CreatedOn], [CreatedBy]) " +
                 "VALUES(@Name, @CreatedOn, @CreatedBy); SELECT SCOPE_IDENTITY();";
 
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Name", Country.Name));
@@ -46,7 +46,7 @@ namespace Data
                     "[ChangedBy]=@ChangedBy " +
                 "WHERE [Id]=@Id ";
 
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Name", Country.Name));
@@ -65,7 +65,7 @@ namespace Data
         public void DeleteById(int id)
         {
             const string sqlStatement = "DELETE dbo.Country WHERE [Id]=@Id ";
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
@@ -84,7 +84,7 @@ namespace Data
                 "FROM dbo.Country WHERE [Id]=@Id ";
 
             Country Country = null;
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                cmd.Parameters.Add(Db.CreateParameter("@Id", id));
@@ -107,7 +107,7 @@ namespace Data
             const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Country ";
 
             var result = new List<Country>();
-            var connection = Db.CreateConnection();
+            var connection = Db.CreateOpenConnection();
             using (var cmd = Db.CreateCommand(sqlStatement, connection))
             {
                using (var dr = cmd.ExecuteReader())

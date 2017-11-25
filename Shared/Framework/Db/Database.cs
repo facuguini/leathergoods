@@ -9,11 +9,12 @@ namespace Framework.Db
     {
         public string connectionString { get; set; }
 
-        public abstract IDbConnection CreateConnection();
-        public abstract IDbCommand CreateCommand();
         public abstract IDbConnection CreateOpenConnection();
+        public abstract IDbCommand CreateCommand();
+        public abstract IDbConnection CreateConnection();
         public abstract IDbCommand CreateCommand(string commandText, IDbConnection connection);
         public abstract IDbCommand CreateStoredProcCommand(string procName, IDbConnection connection);
         public abstract IDataParameter CreateParameter(string parameterName, object parameterValue);
+        public abstract String LastIdFunction();
     }
 }

@@ -42,5 +42,10 @@ namespace Framework.Db.Concrete
         {
             return new MySqlParameter(parameterName, parameterValue);
         }
+
+        public override string LastIdFunction()
+        {
+            return "SELECT LAST_INSERT_ID();";
+        }
     }
 }
