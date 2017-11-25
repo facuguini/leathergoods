@@ -37,22 +37,35 @@ namespace UI.Controllers
             return View();
         }
 
-        public IActionResult LogIn()
+        public IActionResult LogIn(string redirectTo)
         {
+            var controller = string.IsNullOrWhiteSpace(redirectTo) ? "Home" : redirectTo;
+            TempData["redirectTo"] = controller;
             return View();
         }
 
         [HttpPost]
         public IActionResult LogIn(User user)
         {
-            var _user = new UserProcess().LogIn(user);
-            if(_user == null)
+            try
+            {
+                var _user = new UserProcess().LogIn(user);
+                if(_user == null)
+                    return View(user);
+                Console.WriteLine(_user.Roles.Count);
+                Cache.Add(
+                    Request.Cookies.FirstOrDefault(x => x.Key == ".leathergoods").Value,
+                    _user
+                );
+                var controller = TempData["redirectTo"] != null ? TempData["redirectTo"].ToString() : "Home";
+                TempData.Remove("redirectTo");
+                return RedirectToAction("Index", controller);
+            }
+            catch(Exception ex)
+            {
+                ViewData["error"] = ex.Message;
                 return View(user);
-            Cache.Add(
-                Request.Cookies.FirstOrDefault(x => x.Key == ".leathergoods").Value,
-                _user
-            );
-            return RedirectToAction("Index", "Category");
+            }
         }
 
         [HttpGet]
