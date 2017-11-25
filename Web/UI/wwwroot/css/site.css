@@ -70,3 +70,17 @@
 .marbottom-6 {
   margin-bottom: 6em;
 }
+
+.box {
+  padding: 5px;
+  box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.12);
+  height: 50vh;
+}
+.box img {
+  width: 100%;
+  max-height: 50vh;
+}
+.box h3,
+.box h4 {
+  text-align: center;
+}
