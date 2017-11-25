@@ -18,6 +18,7 @@ namespace UI.Security
             if (user != null)
             {
                 filterContext.HttpContext.Items.Add("User", user.UserName);
+                filterContext.HttpContext.Items.Add("Role", user.Roles[0].Name.ToUpper());
             }
         }
     }

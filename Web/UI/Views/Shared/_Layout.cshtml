@@ -23,7 +23,14 @@
                 <ul class="nav navbar-nav">
                     @if(Context.Items["User"] != null)
                     {
-                      <li><a asp-area="" asp-controller="Category" asp-action="Index">Category</a></li>
+                      if(Context.Items["Role"] != null) {
+                        if(Context.Items["Role"].ToString() == "ADMIN") {
+                          <li><a asp-area="" asp-controller="Category" asp-action="Index">Category</a></li>
+                        }
+                        if(Context.Items["Role"].ToString() == "USER") {
+                          <li><a asp-area="" asp-controller="Product" asp-action="Index">Tienda</a></li>
+                        }
+                      }
                       <li><a>Hola, @Context.Items["User"]</a></li>
                       <li><a asp-area="" asp-controller="Home" asp-action="LogOut">Log out</a></li>
                     } else {
