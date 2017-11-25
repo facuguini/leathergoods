@@ -9,6 +9,10 @@
 <hr />
 <div class="row">
   <div class="col-md-4">
+    @if(ViewData["error"] != null)
+    {
+      <p>Error al iniciar session: @ViewData["error"].ToString()</p>
+    }
     <form asp-action="LogIn">
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
       <div class="form-group">
