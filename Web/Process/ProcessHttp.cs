@@ -61,7 +61,8 @@ namespace Web.Process
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
                 var response = client.PostAsync(url, ParseObject<T>(value)).Result;
                 response.EnsureSuccessStatusCode();
-                return value;
+                var data = ParseResponse<T>(response.Content.ReadAsStringAsync().Result);
+                return data;
             }
         }
 
