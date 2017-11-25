@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Web.Process;
 using Entities;
 using UI.Session;
+using UI.Security;
 
 namespace UI.Controllers
 {
     [SessionCookie]
+    [Authorize("USER")]
     public class ProductController : Controller
     {
         // GET: Products/Product

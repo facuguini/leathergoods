@@ -12,7 +12,7 @@ using UI.Security;
 namespace UI.Controllers
 {
     [SessionCookie]
-    [Authorize]
+    [Authorize("ADMIN")]
     public class CategoryController : Controller
     {
         CategoryProcess process = new CategoryProcess();
