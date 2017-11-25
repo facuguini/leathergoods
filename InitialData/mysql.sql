@@ -54,7 +54,22 @@ CREATE TABLE `Category` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
-
+CREATE TABLE `Product` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Title` VARCHAR(100) NOT NULL,
+  `Description` VARCHAR(255) NULL,
+  `DealerId` INT NULL,
+  `Image` VARCHAR(255) NULL,
+  `Price` DECIMAL(2) NULL,
+  `QuantitySold` INT NULL DEFAULT 0,
+  `AvgStars` DECIMAL(5) NULL DEFAULT 2.5,
+  `RowId` VARCHAR(255) NULL,
+  `CreatedOn` DATETIME NULL,
+  `CreatedBy` INT NULL,
+  `ChangedOn` DATETIME NULL,
+  `ChangedBy` INT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC));
 
 INSERT INTO `leathergoods`.`AspNetUsers` (`Email`, `EmailConfirmed`, `PasswordHash`, `SecurityStamp`, `PhoneNumber`,
 `PhoneNumberConfirmed`, `TwoFactorEnabled`, `UserName`) VALUES ('admin@admin.com', 1,
