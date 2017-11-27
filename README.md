@@ -1,8 +1,14 @@
 # LeatherGoods
 .NET Core multilayers proyect
 
+## Requirements
+To be able to run this proyect, you must have installed:
+- [Dotnet Core 2.0](https://www.microsoft.com/net/core)
+- [NodeJS v8.5.0](https://nodejs.org/es/)
+- [yarn](https://yarnpkg.com/lang/en/) or [npm](https://www.npmjs.com/)
+
+
 ## Installation
-To be able to run this proyect, you must have installed [Dotnet Core 2.0](https://www.microsoft.com/net/core).
 
 Clone this repo and run the next line to install required packages:
 ```
