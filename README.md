@@ -53,17 +53,21 @@ After set the new vars, you need to reload this file.
 
 ## Running the app
 
-You must activate the env running the next commands.
-This command will create a new file called ```local.sh```. You must set the keys of your project here and these will be safe because this file is ignored to commit. You can copy the env names from ```activate.sh``` file.
-
-After set the vars, you can run the project alias set with this scripts.
+After finishing the installation and setup, you can execute the npm task to run the Web and API using **yarn** or **npm**(We use yarn for this tutorial).
 
 To run the Web:
 ```
-lg_run_web
+yarn run web
 ```
 
 To run the API:
 ```
-lg_run_api
+yarn run api
 ```
+
+Open your browser and browse to the urls you have set in the env scripts and enjoy your app running :).
+
+## Authors
+
+- [Facundo Guini](https://github.com/fguini)
+- [Marco Puccio](https://github.com/marcopuccio)
