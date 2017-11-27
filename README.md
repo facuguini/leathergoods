@@ -33,6 +33,23 @@ This line, will load the default vars into your environment and create a custom 
 After set the new vars, you need to reload this file.
 
 
+## Available Vars
+
+```ASPNETCORE_ENVIRONMENT```= Choose between **[Production, Development]**
+
+```DB_PROVIDER```=Choose between **[MSSQLServer, Oracle, Postgres, MySQL]**
+
+```DB_CONNECTION_STRING```= Your DB Connection String
+
+```CACHE_STORE_PROVIDER```= Choose between **[Redis, Mongo]**
+
+```CACHE_STORE_CONNECTION_STRING```= Your Cache Connection String
+
+```API_URL```= Your API URL Here
+
+```WEB_URL```= Your WEB URL Here
+
+
 
 ## Running the app
 
