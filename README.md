@@ -15,29 +15,29 @@ dotnet restore LeatherGoods.sln
 ```
 
 ## Setup
-Before running the app, you must to set the necessary Environment Variables such db connection string, web or API url.
+Before running the app, you must set the necessary Environment Variables such db connection string, web or API url.
 To set this vars, you can execute your platform script placed in ```Environment``` dir to create custom file, or just edit the given one.
 
 ### Linux
 ```
 source Environment/linux.sh
 ```
-This line, will load the default vars into your environment and create a custom script called ```local_linux.sh```. In this new file you must set your specific custom vars.
-After set the new vars, you need to reload this file.
+This line will load the default vars into your environment and create a custom script called ```local_linux.sh```. In this new file you must set your specific custom vars.
+After setting the new vars, you need to reload this file.
 
 ### Windows
 ```
 .\Environment/windows.ps1
 ```
-This line, will load the default vars into your environment and create a custom script called ```local_windows.ps1```. In this new file you must set your specific custom vars.
-After set the new vars, you need to reload this file.
+This line will load the default vars into your environment and create a custom script called ```local_windows.ps1```. In this new file you must set your specific custom vars.
+After setting the new vars, you need to reload this file.
 
 
 ## Available Vars
 
 ```ASPNETCORE_ENVIRONMENT```= Choose between **[Production, Development]**
 
-```DB_PROVIDER```=Choose between **[MSSQLServer, Oracle, Postgres, MySQL]**
+```DB_PROVIDER```= Choose between **[MSSQLServer, Oracle, Postgres, MySQL]**
 
 ```DB_CONNECTION_STRING```= Your DB Connection String
 
