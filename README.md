@@ -23,14 +23,14 @@ To set this vars, you can execute your platform script placed in ```Environment`
 source Environment/linux.sh
 ```
 This line will load the default vars into your environment and create a custom script called ```local_linux.sh```. In this new file you must set your specific custom vars.
-After setting the new vars, you need to reload this file.
+After setting up the new vars, you need to reload this file.
 
 ### Windows
 ```
 .\Environment/windows.ps1
 ```
 This line will load the default vars into your environment and create a custom script called ```local_windows.ps1```. In this new file you must set your specific custom vars.
-After setting the new vars, you need to reload this file.
+After setting up the new vars, you need to reload this file.
 
 
 ## Available Vars
@@ -65,7 +65,7 @@ To run the API:
 yarn run api
 ```
 
-Open your browser and browse to the urls you have set in the env scripts and enjoy your app running :).
+Open your browser and browse the urls you have set up in the env scripts and enjoy your app running :).
 
 ## Authors
 
