@@ -60,9 +60,9 @@ CREATE TABLE `Product` (
   `Description` VARCHAR(255) NULL,
   `DealerId` INT NULL,
   `Image` VARCHAR(255) NULL,
-  `Price` DECIMAL(2) NULL,
+  `Price` DOUBLE,
   `QuantitySold` INT NULL DEFAULT 0,
-  `AvgStars` DECIMAL(5) NULL DEFAULT 2.5,
+  `AvgStars` DOUBLE NULL DEFAULT 2.5,
   `RowId` VARCHAR(255) NULL,
   `CreatedOn` DATETIME NULL,
   `CreatedBy` INT NULL,
@@ -71,6 +71,89 @@ CREATE TABLE `Product` (
   PRIMARY KEY (`Id`),
   UNIQUE INDEX `Id_UNIQUE` (`Id` ASC));
 
-INSERT INTO `leathergoods`.`AspNetUsers` (`Email`, `EmailConfirmed`, `PasswordHash`, `SecurityStamp`, `PhoneNumber`,
-`PhoneNumberConfirmed`, `TwoFactorEnabled`, `UserName`) VALUES ('admin@admin.com', 1,
-'fYsznLkr49rxD1Vkm12FbaDRqpSAzkuE7Pbtg8qYrFk=', 'ASDASDnu2dn9210dn0d21idn2mdi', '1111-1111', 1, 0, 'admin');
+-- Create admin and user
+INSERT INTO `AspNetUsers` (
+  `Email`,
+  `EmailConfirmed`,
+  `PasswordHash`,
+  `SecurityStamp`,
+  `PhoneNumber`,
+  `PhoneNumberConfirmed`,
+  `TwoFactorEnabled`,
+  `UserName`
+) VALUES (
+  'admin@admin.com',
+  1,
+  'fYsznLkr49rxD1Vkm12FbaDRqpSAzkuE7Pbtg8qYrFk=',
+  'ASDASDnu2dn9210dn0d21idn2mdi',
+  '1111-1111',
+  1,
+  0,
+  'admin'
+), (
+  'user@user.com',
+  1,
+  'fYsznLkr49rxD1Vkm12FbaDRqpSAzkuE7Pbtg8qYrFk=',
+  'ASDASDnu2dn9210dn0d21idn2mdi',
+  '1111-1111',
+  1,
+  0,
+  'user'
+);
+
+-- Create admin and user roles
+INSERT INTO `AspNetRoles` (
+  `Name`
+) VALUES (
+  'admin'
+), (
+  'user'
+);
+
+-- Set roles to users
+INSERT INTO AspNetUserRoles
+SELECT u.Id, r.Id FROM AspNetRoles r
+LEFT JOIN AspNetUsers u ON 1 = 1 AND u.UserName = 'admin'
+WHERE r.Name = 'admin';
+
+INSERT INTO AspNetUserRoles
+SELECT u.Id, r.Id FROM AspNetRoles r
+LEFT JOIN AspNetUsers u ON 1 = 1 AND u.UserName = 'user'
+WHERE r.Name = 'user';
+
+
+-- Add Some default products
+INSERT INTO `Product`(
+  `Title`,
+  `Description`,
+  `DealerId`,
+  `Image`,
+  `Price`,
+  `QuantitySold`,
+  `AvgStars`
+)
+VALUES (
+  'Pantalones Cuero Negro',
+  'Increibles pantalones de cuero ajustados!',
+  NULL,
+  NULL,
+  '111.11',
+  '0',
+  '3'
+),(
+  'Cinturon cuero blanco',
+  'Excelente cinturon',
+  NULL,
+  NULL,
+  '222.22',
+  '0',
+  '3'
+),(
+  'Sombrero de cuero',
+  'Cuero rojo de la selva amazonica',
+  NULL,
+  NULL,
+  '333.33',
+  '0',
+  '3'
+);
