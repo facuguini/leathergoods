@@ -93,7 +93,7 @@ INSERT INTO `AspNetUsers` (
 ), (
   'user@user.com',
   1,
-  'fYsznLkr49rxD1Vkm12FbaDRqpSAzkuE7Pbtg8qYrFk=',
+  'oEB6bk6bFFTHMLMwGtErIT6qWxUZGd1i3iyPEVBW1dU=',
   'ASDASDnu2dn9210dn0d21idn2mdi',
   '1111-1111',
   1,
