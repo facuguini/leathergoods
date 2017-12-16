@@ -1,5 +1,5 @@
 New-Variable -Name "root" -Value $pwd
-# New-Variable -Name "run" -Value "dotnet run"
+New-Variable -Name "run" -Value "dotnet run"
 
 # Set ASPNETCORE ENVIRONMENT var. Choose between [Production, Development]
 New-Variable -Name "ASPNETCORE_ENVIRONMENT" -Value "<Your Environment Here>"

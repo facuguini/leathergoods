@@ -7,7 +7,9 @@
   "author": "Marco Puccio <mpuccio90@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "web": ". Environment/linux.sh && $RUN --project $ROOT/Web/UI/UI.csproj",
-    "api": ". Environment/linux.sh && $RUN --project $ROOT/API/API.csproj"
+    "linux_web": ". Environment/linux.sh && $RUN --project $ROOT/Web/UI/UI.csproj",
+    "linux_api": ". Environment/linux.sh && $RUN --project $ROOT/API/API.csproj",
+    "windows_web": ".\\Environment/windows.ps1 && $run --project $ROOT/Web/UI/UI.csproj",
+    "windows_api": ".\\Environment/windows.ps1 && $run --project $ROOT/API/API.csproj"
   }
 }
