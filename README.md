@@ -31,6 +31,7 @@ After setting up the new vars, you need to reload this file.
 ```
 This line will load the default vars into your environment and create a custom script called ```local_windows.ps1```. In this new file you must set your specific custom vars.
 After setting up the new vars, you need to reload this file.
+
 *Note: Run before running Visual Studio.*
 
 ## Available Vars
@@ -69,7 +70,8 @@ yarn run api
 Open your browser and browse the urls you have set up in the env scripts and enjoy your app running :).
 
 ### VisualStudio
-If you want to run it in VS you must make the projects not to run IIS to make the project use the URLs assigned in the env scripts
+If you want to run it in VS you must make the projects not to run IIS to make the project use the URLs assigned in the env scripts.
+
 In both the Web and API projects properties:
 ```
 Debug -> Start -> Project
