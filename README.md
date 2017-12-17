@@ -30,7 +30,7 @@ After setting up the new vars, you need to reload this file.
 .\Environment/windows.ps1
 ```
 This line will load the default vars into your environment and create a custom script called ```local_windows.ps1```. In this new file you must set your specific custom vars.
-After setting up the new vars, you need to reload this file.
+After setting up the new vars, you need to reload this file and reload VS if you are using it.
 
 *Note: Run before running Visual Studio.*
 
@@ -75,6 +75,28 @@ If you want to run it in VS you must make the projects not to run IIS to make th
 In both the Web and API projects properties:
 ```
 Debug -> Start -> Project
+```
+
+## Restore Initial Data
+For the moment, there is only a initial data SQL script for MySQL Server. To restore it you must run the next command.
+
+```
+mysql -u <YOUR_DB_USER_HERE> -p < InitialData/mysql.sql
+```
+
+### Default Test Users
+After restoring the MySQL script, you can use the default users to access the app.
+
+```
+Username: admin
+Password: admin
+```
+
+or
+
+```
+Username: user
+Password: user
 ```
 
 ## Authors
